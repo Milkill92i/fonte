@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17191d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="La Fonte">
+<link rel="apple-touch-icon" href="fonte-icon.png">
+<title>La Fonte — PPL Recomp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#17191d; --card:#1f2227; --card2:#262a31; --line:#30343c; --line2:#3a3f48;
+  --ink:#ece9e1; --mut:#9a9ea6; --dim:#6c7078;
+  --blu:#4a7df0; --blu-soft:rgba(74,125,240,.14); --blu-line:rgba(74,125,240,.45);
+  --grn:#43a06a; --amber:#d9a441;
+  --r:14px;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Barlow',system-ui,sans-serif; font-size:16px; line-height:1.45;
+  padding-bottom:110px;
+}
+.wrap{max-width:520px; margin:0 auto; padding:0 14px}
+
+/* ---------- Header ---------- */
+header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--bg) 82%, rgba(23,25,29,0)); padding-top:env(safe-area-inset-top)}
+.brandrow{display:flex; align-items:center; justify-content:space-between; padding:14px 2px 8px}
+.brand{display:flex; flex-direction:column; gap:0}
+.brand .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; color:var(--dim); text-transform:uppercase}
+.brand h1{font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:30px; letter-spacing:.02em; margin:0; line-height:1; text-transform:uppercase}
+.brand h1 span{color:var(--blu)}
+.docbtn{
+  border:1px solid var(--line2); background:var(--card); color:var(--ink);
+  font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:15px; letter-spacing:.05em;
+  padding:9px 14px; border-radius:999px; cursor:pointer; text-transform:uppercase;
+}
+.docbtn:active{transform:scale(.97)}
+.chips{display:flex; gap:6px; overflow-x:auto; padding:4px 2px 12px; scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:1 0 auto; min-width:56px; text-align:center; cursor:pointer;
+  border:1px solid var(--line); border-radius:12px; padding:7px 10px 6px; background:var(--card);
+}
+.chip .d{font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:16px; letter-spacing:.04em; text-transform:uppercase}
+.chip .t{font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--dim); letter-spacing:.06em; text-transform:uppercase}
+.chip.sel{border-color:var(--blu-line); background:var(--blu-soft)}
+.chip.sel .t{color:var(--blu)}
+.chip.today .d::after{content:"•"; color:var(--blu); margin-left:4px}
+
+/* ---------- Banner ---------- */
+.banner{
+  display:flex; gap:10px; align-items:flex-start;
+  border:1px solid rgba(217,164,65,.4); background:rgba(217,164,65,.08);
+  border-radius:var(--r); padding:12px 14px; margin:2px 0 14px; font-size:14px; color:#e8d9b8;
+}
+.banner b{color:var(--amber)}
+.banner button{margin-left:auto; background:none; border:none; color:var(--amber); font-size:16px; cursor:pointer; padding:0 2px}
+
+/* ---------- Day header ---------- */
+.dayhead{margin:6px 0 14px}
+.dayhead h2{
+  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:44px; line-height:.95;
+  margin:0; text-transform:uppercase; letter-spacing:.01em;
+}
+.dayhead .sub{color:var(--mut); font-size:14px; margin-top:6px}
+.dayhead .meta{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dim);
+  margin-top:8px; letter-spacing:.04em; text-transform:uppercase;
+}
+.logistics{
+  border-left:3px solid var(--blu); background:var(--card); border-radius:0 var(--r) var(--r) 0;
+  padding:10px 12px; font-size:13.5px; color:var(--mut); margin:0 0 16px;
+}
+.logistics b{color:var(--ink); font-weight:600}
+
+/* ---------- Cards ---------- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:14px; margin-bottom:12px}
+.card.warm{border-style:dashed}
+.card h3{
+  font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:21px; letter-spacing:.02em;
+  margin:0; text-transform:uppercase; display:flex; align-items:baseline; gap:8px;
+}
+.card h3 .num{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--blu); font-weight:600}
+.exmeta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--mut); margin:5px 0 0; letter-spacing:.03em}
+.cue{font-size:13.5px; color:var(--mut); margin:8px 0 0; line-height:1.45}
+.last{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--dim);
+  margin-top:9px; letter-spacing:.02em;
+}
+.badge{
+  display:inline-flex; align-items:center; gap:6px; margin-top:9px;
+  background:var(--blu-soft); border:1px solid var(--blu-line); color:#9db9f7;
+  font-size:12.5px; font-weight:600; border-radius:8px; padding:5px 9px;
+}
+
+/* warm-up list */
+.warmlist{list-style:none; margin:10px 0 0; padding:0}
+.warmlist li{display:flex; gap:9px; padding:6px 0; font-size:14px; color:var(--mut); align-items:flex-start}
+.warmlist li::before{content:""; flex:0 0 auto; width:7px; height:7px; border-radius:50%; border:1.5px solid var(--dim); margin-top:6px}
+
+/* ---------- Set rows ---------- */
+.sets{margin-top:12px; display:flex; flex-direction:column; gap:7px}
+.setrow{
+  display:grid; grid-template-columns:26px 1fr 1fr 46px; gap:8px; align-items:center;
+  background:var(--card2); border:1px solid var(--line); border-radius:11px; padding:7px 8px;
+}
+.setrow.noload{grid-template-columns:26px 1fr 46px}
+.setrow .sn{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dim); text-align:center}
+.setrow input{
+  width:100%; background:var(--bg); border:1px solid var(--line); border-radius:8px;
+  color:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:600;
+  padding:8px 6px; text-align:center; outline:none;
+}
+.setrow input:focus-visible{border-color:var(--blu-line)}
+.setrow input::placeholder{color:var(--dim); font-weight:500}
+.ck{
+  width:44px; height:38px; border-radius:9px; border:1.5px solid var(--line2);
+  background:transparent; color:var(--dim); font-size:17px; cursor:pointer; line-height:1;
+}
+.setrow.done{background:var(--blu-soft); border-color:var(--blu-line)}
+.setrow.done .ck{background:var(--blu); border-color:var(--blu); color:#fff}
+.unit{font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--dim); text-transform:uppercase; letter-spacing:.06em; text-align:center; margin-top:3px}
+
+/* ---------- Plate loader (signature) ---------- */
+.loader{margin-top:11px; padding:10px 10px 8px; background:var(--bg); border:1px solid var(--line); border-radius:11px}
+.loader .viz{display:flex; align-items:center; justify-content:center; gap:2px; min-height:34px}
+.plate{border-radius:50%; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--bg)}
+.p5{width:30px; height:30px; background:var(--ink); font-size:10px}
+.p2{width:23px; height:23px; background:var(--blu); font-size:9px; color:#fff}
+.p1{width:17px; height:17px; background:var(--grn); font-size:8px; color:#fff}
+.barmid{height:6px; background:linear-gradient(90deg,#585d66,#7d838d,#585d66); border-radius:3px; flex:0 0 54px; margin:0 3px}
+.barend{height:12px; width:4px; background:#7d838d; border-radius:2px; flex:0 0 auto}
+.loader .cap{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--dim); text-align:center; margin-top:7px; letter-spacing:.02em}
+.loader .cap b{color:var(--mut)}
+.loader.err .cap{color:var(--amber)}
+
+/* ---------- Rest / special days ---------- */
+.bigrest{text-align:center; padding:60px 10px}
+.bigrest .ico{font-size:44px}
+.bigrest h2{font-family:'Barlow Condensed',sans-serif; font-size:38px; text-transform:uppercase; margin:12px 0 6px}
+.bigrest p{color:var(--mut); max-width:34ch; margin:0 auto}
+
+/* ---------- Timer pill ---------- */
+#timer{
+  position:fixed; left:50%; transform:translateX(-50%); bottom:calc(16px + env(safe-area-inset-bottom));
+  z-index:80; display:flex; align-items:center; gap:12px;
+  background:var(--blu); color:#fff; border-radius:999px; padding:12px 20px;
+  box-shadow:0 8px 28px rgba(0,0,0,.5); cursor:pointer; border:none; max-width:92vw;
+}
+#timer .tt{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:22px; letter-spacing:.02em}
+#timer .tl{font-size:12px; opacity:.85; text-align:left; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:44vw}
+#timer.hidden{display:none}
+#timer.low{animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:translateX(-50%) scale(1.04)}}
+
+/* ---------- Overlay (programme complet) ---------- */
+#overlay{position:fixed; inset:0; z-index:100; background:var(--bg); overflow-y:auto; display:none}
+#overlay.open{display:block}
+#overlay .inner{max-width:560px; margin:0 auto; padding:18px 16px 60px}
+#overlay .close{
+  position:sticky; top:12px; float:right; z-index:5;
+  background:var(--card); border:1px solid var(--line2); color:var(--ink);
+  width:38px; height:38px; border-radius:50%; font-size:17px; cursor:pointer;
+}
+#overlay h2.doc{font-family:'Barlow Condensed',sans-serif; font-size:40px; text-transform:uppercase; margin:8px 0 2px; line-height:1}
+#overlay .docsub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; margin-bottom:20px}
+#overlay h3.sec{
+  font-family:'Barlow Condensed',sans-serif; font-size:24px; text-transform:uppercase; letter-spacing:.02em;
+  margin:26px 0 8px; padding-top:14px; border-top:1px solid var(--line); color:var(--blu);
+}
+#overlay p, #overlay li{font-size:14.5px; color:var(--mut); line-height:1.55}
+#overlay p b, #overlay li b{color:var(--ink)}
+#overlay ul{padding-left:18px; margin:8px 0}
+#overlay .dayblock{margin:14px 0 4px}
+#overlay .dayblock h4{font-family:'Barlow Condensed',sans-serif; font-size:19px; text-transform:uppercase; margin:0 0 2px}
+#overlay .dayblock .dm{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px}
+#overlay .exline{display:flex; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:14px}
+#overlay .exline .xn{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--blu); flex:0 0 16px; padding-top:2px}
+#overlay .exline .xb{flex:1}
+#overlay .exline .xt{color:var(--ink); font-weight:500}
+#overlay .exline .xm{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--dim); margin-top:2px; letter-spacing:.02em}
+
+footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); letter-spacing:.08em; text-transform:uppercase}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="brandrow">
+    <div class="brand">
+      <span class="eyebrow">Milann · PPL Recomp · 5 j/sem</span>
+      <h1>La <span>Fonte</span></h1>
+    </div>
+    <button class="docbtn" id="openDoc">Programme</button>
+  </div>
+  <div class="chips" id="chips"></div>
+</div></header>
+
+<div class="wrap">
+  <div id="banner"></div>
+  <main id="app"></main>
+  <footer>Sauvegarde automatique · v1 · Juillet 2026</footer>
+</div>
+
+<button id="timer" class="hidden" aria-live="polite">
+  <span class="tt" id="tt">3:00</span>
+  <span class="tl" id="tl">Repos</span>
+</button>
+
+<div id="overlay" role="dialog" aria-modal="true"><div class="inner" id="ovinner"></div></div>
+
+<script>
+/* ================= DONNÉES ================= */
+const RANGE = (a,b)=>a+"–"+b;
+const DAYS = {
+ 1:{key:'push', t:'Push', sub:'Pectoraux · Épaules · Triceps', dur:'~60 min · 16 séries',
+    log:"Ordre <b>décroissant</b> : après le couché, tu ne fais que <b>retirer</b> des disques jusqu'à l'élastique.",
+    warm:["2–3 min de cardio léger (jumping jacks, montées de genoux)",
+          "Élastique : 15 pull-aparts · 10 dislocations d'épaules",
+          "Coudes (non négociable) : 15 extensions triceps + 15 curls à l'élastique, légers",
+          "2 séries d'approche au développé couché : ~50 % puis ~75 % de ta charge"],
+    ex:[
+     {id:'dc', n:'Développé couché haltères', m:'pair', s:4, r:[6,10], rir:'1–2', rest:180,
+      cue:"Omoplates serrées, coudes à ~45–60°, descends jusqu'à l'étirement complet des pecs. Départ et fin : haltères sur les cuisses."},
+     {id:'di', n:'Développé incliné haltères', m:'pair', s:3, r:[8,12], rir:'1–2', rest:150,
+      cue:"Dossier à 30–45°. Pousse vers le haut de la poitrine, sans claquer les coudes en haut."},
+     {id:'dm', n:'Développé militaire assis', m:'pair', s:3, r:[8,12], rir:'1–2', rest:150,
+      cue:"Dossier à 75–80°, lombaires collées. Monte à la verticale des épaules, redescends jusqu'aux oreilles."},
+     {id:'el', n:'Élévations latérales', m:'pair', s:3, r:[12,15], rir:'0–1', rest:90,
+      cue:"Coudes souples et fixes, monte à l'horizontale, 2 s pour redescendre. Léger, strict."},
+     {id:'pt', n:'Extensions triceps élastique', m:'band', s:3, r:[15,20], rir:'0–1', rest:75,
+      cue:"Élastique accroché en haut de la barre de traction, coudes collés au corps. Reps hautes = santé des tendons."}
+    ]},
+ 2:{key:'pull', t:'Pull', sub:'Dos · Biceps · Abdos', dur:'~65 min · 19 séries',
+    log:"Monte <b>l'haltère lourd</b> (rowing) pendant l'échauffement. Démonte-le vers 2 haltères pendant le tirage élastique.",
+    warm:["2–3 min de cardio léger",
+          "Élastique : 15 pull-aparts · 10 rotations externes par bras",
+          "Coudes : 15 curls à l'élastique, légers",
+          "5 tractions scapulaires (suspendu, hausse/serre les omoplates)"],
+    ex:[
+     {id:'tr', n:'Tractions (pronation)', m:'bw', s:4, r:[6,12], rir:'≈ échec', rest:180,
+      cue:"Max de reps strictes, puis élastique sous les genoux pour finir dans la fourchette. Dernière série : + 3 négatives de 5 s."},
+     {id:'r1', n:'Rowing 1 bras, appui banc', m:'solo', s:4, r:[8,12], rir:'1–2', rest:150, uni:'bras',
+      cue:"Genou et main sur le banc, dos plat. Tire l'haltère vers la hanche, 2 s de descente. Ton tirage le plus lourd."},
+     {id:'sp', n:'Tirage bras tendus élastique', m:'band', s:3, r:[12,20], rir:'0–1', rest:75,
+      cue:"Élastique en haut de la barre. Bras quasi tendus, ramène vers les cuisses, contracte les dorsaux."},
+     {id:'cd', n:'Curl haltères debout', m:'pair', s:3, r:[8,12], rir:'0–1', rest:90,
+      cue:"Coudes fixes le long du corps, pas d'élan. Descente contrôlée 2–3 s."},
+     {id:'ci', n:'Curl incliné sur banc', m:'pair', s:2, r:[10,15], rir:'0–1', rest:90,
+      cue:"Dossier à 45–60°, bras qui pendent en arrière du corps : étirement max du biceps. Ne remonte pas les coudes."},
+     {id:'rj', n:'Relevés de jambes suspendus', m:'bw', s:3, r:[8,15], rir:'0–1', rest:90,
+      cue:"À la barre de traction. Enroule le bassin en fin de montée, zéro balancier. Genoux fléchis si trop dur."}
+    ]},
+ 3:{key:'legs', t:'Legs · Quadris', sub:'Quadriceps · Mollets · Abdos', dur:'~60 min · 18 séries',
+    log:"Bulgare en <b>paire</b> → <b>fusionne</b> tous les disques sur un haltère pour le goblet → un haltère léger pour les mollets.",
+    warm:["2–3 min de cardio léger (montées de genoux)",
+          "10 squats au poids du corps + 10 fentes dynamiques",
+          "Hanches : 8 rotations 90/90 par côté",
+          "Chevilles : 10 flexions genou-vers-mur par côté"],
+    ex:[
+     {id:'bu', n:'Squat bulgare', m:'pair', s:3, r:[8,12], rir:'1–2', rest:150, uni:'jambe',
+      cue:"Pied arrière sur le banc. Descends le genou vers le sol, buste légèrement penché. Jambe G puis D = 1 série."},
+     {id:'go', n:'Goblet squat tempo 3-1-1', m:'solo', s:3, r:[10,15], rir:'1–2', rest:150,
+      cue:"Haltère vertical contre la poitrine. 3 s de descente, 1 s de pause en bas, remonte fort."},
+     {id:'si', n:'Sissy squat', m:'bw', s:3, r:[8,15], rir:'0–1', rest:120,
+      cue:"Tiens-toi aux barres à dips. Monte sur pointes, bascule le buste en arrière, genoux qui avancent. Brûlure quadris garantie."},
+     {id:'mo', n:'Mollets unijambe sur marche', m:'solo', s:4, r:[10,15], rir:'0–1', rest:75, uni:'jambe',
+      cue:"Avant-pied sur une marche, amplitude complète. Pause 1 s en haut ET en bas — pas de rebond."},
+     {id:'cr', n:'Crunch décliné', m:'bwl', s:3, r:[10,15], rir:'0–1', rest:75,
+      cue:"Banc décliné, pieds calés. Enroule le buste, souffle en haut. Disque contre la poitrine dès que tu dépasses 15."},
+     {id:'pl', n:'Planche', m:'time', s:2, r:'45–60 s', rir:'—', rest:60,
+      cue:"Coudes sous les épaules, bassin rétroversé, fesses serrées. Chronomètre en secondes."}
+    ]},
+ 4:{key:'actif', t:'Repos actif', sub:'Cardio Z2 · Mobilité · Core', dur:'~45–60 min · intensité basse',
+    log:"Objectif : <b>bouger et récupérer</b>, pas performer. Tu dois pouvoir tenir une conversation pendant le cardio.",
+    warm:null,
+    ex:null,
+    actif:[
+     {t:"Cardio zone 2 — 30 à 45 min", d:"Marche rapide, vélo ou footing facile. Rythme conversation : si tu halètes, ralentis. C'est le moteur de la perte de gras, pas la séance de muscu."},
+     {t:"Mobilité — 10 min", d:"Épaules (dislocations élastique), hanches (90/90, fente basse 30 s/côté), poignets et coudes (extensions douces, étirement des fléchisseurs)."},
+     {t:"Core anti-rotation — option", d:"Pallof press à l'élastique 3×10 par côté + planche latérale 2×30 s par côté. Court, pas épuisant."}
+    ]},
+ 5:{key:'upper', t:'Upper', sub:'Push B · Pull B', dur:'~65 min · 19 séries',
+    log:"Poids du corps et paires alternés : <b>deux réglages d'haltères</b> sur toute la séance (rowing, puis on descend).",
+    warm:["2–3 min de cardio léger",
+          "Élastique : 15 pull-aparts · 10 dislocations d'épaules",
+          "Coudes : 15 extensions + 15 curls à l'élastique, légers",
+          "1 série de dips à demi-amplitude + 5 tractions scapulaires"],
+    ex:[
+     {id:'dp', n:'Dips penché avant', m:'bwl', s:3, r:[8,12], rir:'1–2', rest:180,
+      cue:"Buste incliné vers l'avant, coudes ~45°, descends jusqu'à l'étirement des pecs. Lest : sac à dos + disques dès que 12 reps deviennent faciles."},
+     {id:'rb', n:'Rowing buste soutenu, banc incliné', m:'pair', s:4, r:[8,12], rir:'1–2', rest:150,
+      cue:"Poitrine posée sur le dossier à 30–45°. Tire les coudes vers le plafond, serre 1 s en haut. Zéro triche lombaire."},
+     {id:'ec', n:'Écartés à plat', m:'pair', s:3, r:[10,15], rir:'0–1', rest:90,
+      cue:"Léger pli de coude FIXE, grand arc de cercle. Si le coude plie, c'est devenu un développé — allège."},
+     {id:'ts', n:'Tractions supination', m:'bw', s:3, r:[6,10], rir:'1–2', rest:150,
+      cue:"Prise largeur épaules, paumes vers toi. Élastique d'assistance si besoin pour rester dans la fourchette. Gros bonus biceps."},
+     {id:'e2', n:'Élévations latérales (léger)', m:'pair', s:3, r:[12,20], rir:'0–1', rest:75,
+      cue:"Deuxième passage de la semaine : plus léger, plus de reps, exécution parfaite."},
+     {id:'fp', n:'Face pulls élastique', m:'band', s:3, r:[15,20], rir:'0–1', rest:60,
+      cue:"Tire l'élastique vers le visage, coudes hauts, écarte les mains en fin de mouvement. Épaule saine = épaule qui pousse lourd."}
+    ]},
+ 6:{key:'post', t:'Postérieur', sub:'Ischios · Fessiers · Lombaires · Abdos', dur:'~65 min · 19 séries',
+    log:"RDL en <b>paire</b> → <b>fusionne</b> sur un haltère pour le hip thrust → un haltère léger pour les mollets. Le disque seul suffit pour lester back extensions.",
+    warm:["2–3 min de cardio léger",
+          "10 good mornings à l'élastique (élastique sous les pieds, sur la nuque)",
+          "10 hinges à vide : hanches en arrière, dos plat, mains qui glissent sur les cuisses",
+          "1 série de RDL légère (~50 %)"],
+    ex:[
+     {id:'rd', n:'Soulevé de terre roumain', m:'pair', s:4, r:[8,12], rir:'1–2', rest:180,
+      cue:"Hanches en arrière, dos plat, haltères qui frôlent les jambes. Descends jusqu'à l'étirement des ischios, remonte en poussant le sol. L'exo star de ta chaîne postérieure."},
+     {id:'ht', n:'Hip thrust, épaules sur banc', m:'solo', s:3, r:[10,15], rir:'1–2', rest:150,
+      cue:"Haut du dos sur le banc, haltère sur le bassin (serviette pliée). Monte jusqu'à l'alignement épaules-genoux, serre les fessiers 1 s."},
+     {id:'lc', n:'Leg curl serviette', m:'bw', s:3, r:[8,15], rir:'0–1', rest:120,
+      cue:"Allongé sur le dos, talons sur une serviette (sol lisse), hanches hautes. Ramène les talons puis REPOUSSE lentement. Unijambe si trop facile."},
+     {id:'be', n:'Back extension sur banc', m:'bwl', s:3, r:[12,20], rir:'0–1', rest:90,
+      cue:"Hanches sur l'assise, pieds calés. Monte jusqu'à l'alignement du corps, pas plus haut. Disque contre la poitrine pour lester."},
+     {id:'m2', n:'Mollets debout unijambe', m:'solo', s:3, r:[10,15], rir:'0–1', rest:75, uni:'jambe',
+      cue:"Même consigne que mercredi : amplitude complète, pauses en haut et en bas."},
+     {id:'r2', n:'Relevés de jambes suspendus', m:'bw', s:3, r:[8,15], rir:'0–1', rest:90,
+      cue:"À la barre. Enroule le bassin, contrôle la descente."}
+    ]},
+ 0:{key:'off', t:'Repos', sub:'', dur:'', log:null, warm:null, ex:null, off:true}
+};
+const ORDER = [1,2,3,4,5,6,0];
+const DLETTER = {1:'Lun',2:'Mar',3:'Mer',4:'Jeu',5:'Ven',6:'Sam',0:'Dim'};
+
+/* ================= STOCKAGE ================= */
+const mem = {};
+const store = {
+  async get(k){
+    try{ if(window.storage){ const r = await window.storage.get(k); if(r && r.value!=null) return JSON.parse(r.value); return null; } }catch(e){}
+    try{ const v = localStorage.getItem(k); if(v!=null) return JSON.parse(v); }catch(e){}
+    return (k in mem)? mem[k] : null;
+  },
+  async set(k,v){
+    const s = JSON.stringify(v);
+    try{ if(window.storage){ await window.storage.set(k,s); return; } }catch(e){}
+    try{ localStorage.setItem(k,s); return; }catch(e){}
+    mem[k]=v;
+  }
+};
+const HIST = {}; // cache exId -> array
+
+function today(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0')+"-"+String(d.getDate()).padStart(2,'0'); }
+
+async function loadHist(id){
+  if(HIST[id]) return HIST[id];
+  const v = await store.get('lf_'+id);
+  HIST[id] = Array.isArray(v)? v : [];
+  return HIST[id];
+}
+async function saveSet(ex, idx, kg, reps){
+  const h = await loadHist(ex.id); const d = today();
+  let e = h[h.length-1];
+  if(!e || e.d!==d){ e = {d:d, s:[]}; h.push(e); }
+  e.s[idx] = [kg, reps];
+  while(h.length>10) h.shift();
+  await store.set('lf_'+ex.id, h);
+}
+
+/* ================= CHARGEUR DE DISQUES ================= */
+function sideCompo(kg, solo){
+  if(!kg || isNaN(kg)) return null;
+  const max = solo? 32 : 20;
+  if(kg < 2) return {err:"Minimum 2 kg (la barre seule)"};
+  if(kg > max) return {err:"Max "+max+" kg "+(solo? "sur un haltère (filetage)" : "par main en paire")};
+  if((kg-2) % 2 !== 0) return {err:"Charge paire uniquement (disques symétriques)"};
+  let need = (kg-2)/2;
+  const pool = solo? {5:2,2:2,1:4} : {5:1,2:1,1:2};
+  const out = [];
+  for(const p of [5,2,1]){ while(need>=p && pool[p]>0){ out.push(p); pool[p]--; need-=p; } }
+  return need>0 ? {err:"Pas faisable avec tes disques"} : {plates:out};
+}
+function loaderHTML(kg, solo){
+  const c = sideCompo(kg, solo);
+  if(!c) return "";
+  if(c.err) return '<div class="loader err"><div class="cap">'+c.err+'</div></div>';
+  const P = p => '<span class="plate p'+p+'">'+p+'</span>';
+  const left = c.plates.slice().reverse().map(P).join('');
+  const right = c.plates.map(P).join('');
+  const capTxt = c.plates.length
+    ? "barre 2 kg + <b>"+c.plates.join(" · ")+"</b> par côté"
+    : "barre seule (2 kg)";
+  return '<div class="loader"><div class="viz">'+left+'<span class="barend"></span><span class="barmid"></span><span class="barend"></span>'+right+'</div>'+
+         '<div class="cap">'+kg+' kg '+(solo?'(1 haltère)':'/ main')+' = '+capTxt+'</div></div>';
+}
+
+/* ================= TIMER ================= */
+let tInt=null, tEnd=0, tGen=0;
+const tEl=document.getElementById('timer'), ttEl=document.getElementById('tt'), tlEl=document.getElementById('tl');
+function startTimer(sec, label){
+  clearInterval(tInt); tGen++;
+  tEnd = Date.now() + sec*1000;
+  tEl.classList.remove('hidden','low');
+  tlEl.textContent = "Repos · " + label;
+  tick();
+  tInt = setInterval(tick, 250);
+}
+function tick(){
+  const left = Math.max(0, Math.round((tEnd-Date.now())/1000));
+  ttEl.textContent = Math.floor(left/60)+":"+String(left%60).padStart(2,'0');
+  if(left<=10) tEl.classList.add('low');
+  if(left<=0){
+    clearInterval(tInt);
+    ttEl.textContent = "GO";
+    tlEl.textContent = "Série suivante";
+    if(navigator.vibrate) navigator.vibrate([180,90,180]);
+    const g = tGen;
+    setTimeout(()=>{ if(g===tGen) tEl.classList.add('hidden'); }, 4000);
+  }
+}
+tEl.addEventListener('click', ()=>{ clearInterval(tInt); tEl.classList.add('hidden'); });
+
+/* ================= RENDU ================= */
+const app = document.getElementById('app');
+const chips = document.getElementById('chips');
+let selDay = new Date().getDay();
+
+function buildChips(){
+  chips.innerHTML='';
+  const td = new Date().getDay();
+  for(const d of ORDER){
+    const c = document.createElement('div');
+    c.className = 'chip'+(d===selDay?' sel':'')+(d===td?' today':'');
+    c.innerHTML = '<div class="d">'+DLETTER[d]+'</div><div class="t">'+DAYS[d].t+'</div>';
+    c.onclick = ()=>{ selDay=d; buildChips(); render(); window.scrollTo({top:0}); };
+    chips.appendChild(c);
+  }
+}
+
+function lastLine(ex, h){
+  const prev = [...h].reverse().find(e=>e.d!==today() && e.s && e.s.some(x=>x));
+  if(!prev) return {html:'', prev:null};
+  const parts = prev.s.filter(x=>x).map(x=>{
+    if(ex.m==='bw'||ex.m==='band') return (x[1]??'–');
+    if(ex.m==='time') return (x[1]??'–')+'s';
+    return (x[1]??'–');
+  });
+  const kg = prev.s.find(x=>x && x[0]!=null)?.[0];
+  const kgTxt = (kg!=null)? kg+' kg · ' : '';
+  return {html:'<div class="last">Dernier ('+prev.d.slice(5).split('-').reverse().join('/')+') : '+kgTxt+parts.join(' / ')+' reps</div>', prev};
+}
+function progBadge(ex, prev){
+  if(!prev || !Array.isArray(ex.r)) return '';
+  const logged = prev.s.filter(x=>x && x[1]!=null);
+  if(logged.length >= ex.s && logged.every(x=>x[1] >= ex.r[1])){
+    if(ex.m==='pair'||ex.m==='solo'){
+      const kg = logged.find(x=>x[0]!=null)?.[0];
+      return '<div class="badge">▲ Haut de fourchette atteint — passe à '+(kg!=null?(kg+2)+' kg':'+2 kg')+'</div>';
+    }
+    return '<div class="badge">▲ Haut de fourchette atteint — ajoute du lest ou durcis la variante</div>';
+  }
+  return '';
+}
+
+async function render(){
+  const D = DAYS[selDay];
+  app.innerHTML = '';
+
+  // Jours spéciaux
+  if(D.off){
+    app.innerHTML = '<div class="bigrest"><div class="ico">😴</div><h2>Repos total</h2><p>C\'est ici que le muscle se construit. Vise 7–9 h de sommeil, mange tes protéines, et ne touche pas à la fonte.</p></div>';
+    return;
+  }
+
+  let head = '<div class="dayhead"><h2>'+D.t+'</h2><div class="sub">'+D.sub+'</div><div class="meta">'+D.dur+'</div></div>';
+  if(D.log) head += '<div class="logistics">'+D.log+'</div>';
+  app.insertAdjacentHTML('beforeend', head);
+
+  if(D.actif){
+    for(const b of D.actif){
+      app.insertAdjacentHTML('beforeend',
+        '<div class="card"><h3>'+b.t+'</h3><p class="cue">'+b.d+'</p></div>');
+    }
+    return;
+  }
+
+  // Échauffement
+  if(D.warm){
+    app.insertAdjacentHTML('beforeend',
+      '<div class="card warm"><h3><span class="num">00</span> Échauffement — 6-8 min</h3><ul class="warmlist">'+
+      D.warm.map(w=>'<li>'+w+'</li>').join('')+'</ul></div>');
+  }
+
+  // Exercices
+  for(let x=0; x<D.ex.length; x++){
+    const ex = D.ex[x];
+    const h = await loadHist(ex.id);
+    const {html:lastHtml, prev} = lastLine(ex, h);
+    const todayEntry = h.find(e=>e.d===today());
+
+    const repTxt = Array.isArray(ex.r)? RANGE(ex.r[0],ex.r[1])+' reps' : ex.r;
+    const uniTxt = ex.uni? ' / '+ex.uni : '';
+    const meta = ex.s+' × '+repTxt+uniTxt+' · RIR '+ex.rir+' · repos '+Math.floor(ex.rest/60)+':'+String(ex.rest%60).padStart(2,'0');
+
+    const card = document.createElement('div');
+    card.className='card';
+    let inner = '<h3><span class="num">'+String(x+1).padStart(2,'0')+'</span> '+ex.n+'</h3>'+
+                '<div class="exmeta">'+meta+'</div>'+
+                '<p class="cue">'+ex.cue+'</p>'+ lastHtml + progBadge(ex, prev);
+
+    // set rows
+    const noLoad = (ex.m==='bw' || ex.m==='band' || ex.m==='time');
+    inner += '<div class="sets">';
+    for(let i=0;i<ex.s;i++){
+      const t = todayEntry?.s?.[i];
+      const pKg = t?.[0] ?? prev?.s?.[i]?.[0] ?? prev?.s?.filter(Boolean).slice(-1)[0]?.[0] ?? '';
+      const pReps = t?.[1] ?? '';
+      const phReps = prev?.s?.[i]?.[1] ?? (Array.isArray(ex.r)? ex.r[1] : '60');
+      const done = t? ' done':'';
+      if(noLoad){
+        inner += '<div class="setrow noload'+done+'" data-i="'+i+'">'+
+          '<div class="sn">S'+(i+1)+'</div>'+
+          '<div><input type="number" inputmode="numeric" class="reps" value="'+(pReps!==''?pReps:'')+'" placeholder="'+phReps+'"><div class="unit">'+(ex.m==='time'?'secondes':(ex.m==='bwl'?'reps':'reps'))+'</div></div>'+
+          '<button class="ck" aria-label="Valider la série">✓</button></div>';
+      }else{
+        const kgPh = ex.m==='bwl' ? 'lest' : 'kg';
+        inner += '<div class="setrow'+done+'" data-i="'+i+'">'+
+          '<div class="sn">S'+(i+1)+'</div>'+
+          '<div><input type="number" inputmode="decimal" class="kg" value="'+(pKg!==''?pKg:'')+'" placeholder="'+kgPh+'"><div class="unit">'+(ex.m==='solo'?'kg (1 haltère)':(ex.m==='bwl'?'lest kg':'kg / main'))+'</div></div>'+
+          '<div><input type="number" inputmode="numeric" class="reps" value="'+(pReps!==''?pReps:'')+'" placeholder="'+phReps+'"><div class="unit">reps</div></div>'+
+          '<button class="ck" aria-label="Valider la série">✓</button></div>';
+      }
+    }
+    inner += '</div>';
+    if(ex.m==='pair'||ex.m==='solo'){ inner += '<div class="loaderbox" data-solo="'+(ex.m==='solo')+'"></div>'; }
+    card.innerHTML = inner;
+    app.appendChild(card);
+
+    // wiring
+    const box = card.querySelector('.loaderbox');
+    const firstKg = card.querySelector('.setrow .kg');
+    const updLoader = ()=>{ if(box && firstKg){ box.innerHTML = loaderHTML(parseFloat(firstKg.value), box.dataset.solo==='true'); } };
+    updLoader();
+    card.querySelectorAll('.setrow').forEach(row=>{
+      const i = +row.dataset.i;
+      const kgIn = row.querySelector('.kg');
+      const rIn = row.querySelector('.reps');
+      if(kgIn && row===card.querySelector('.setrow')) kgIn.addEventListener('input', updLoader);
+      row.querySelector('.ck').addEventListener('click', async ()=>{
+        const was = row.classList.contains('done');
+        if(was){ row.classList.remove('done'); return; }
+        row.classList.add('done');
+        const kg = kgIn && kgIn.value!=='' ? parseFloat(kgIn.value) : null;
+        const reps = rIn && rIn.value!=='' ? parseFloat(rIn.value) : null;
+        await saveSet(ex, i, kg, reps);
+        startTimer(ex.rest, ex.n);
+      });
+      [kgIn, rIn].forEach(inp=>{ if(inp) inp.addEventListener('change', async ()=>{
+        if(row.classList.contains('done')){
+          const kg = kgIn && kgIn.value!=='' ? parseFloat(kgIn.value) : null;
+          const reps = rIn && rIn.value!=='' ? parseFloat(rIn.value) : null;
+          await saveSet(ex, i, kg, reps);
+        }
+      });});
+    });
+  }
+}
+
+/* ================= BANNIÈRE RODAGE ================= */
+async function banner(){
+  const el = document.getElementById('banner');
+  const off = await store.get('lf_banner_off');
+  if(off){ el.innerHTML=''; return; }
+  el.innerHTML = '<div class="banner"><div><b>Semaines 1–2 : rodage.</b> Garde 3–4 reps en réserve, vise ~70 % de tes anciennes charges. Tes tendons (coudes !) se remettent au niveau — la progression vient après.</div><button aria-label="Fermer">✕</button></div>';
+  el.querySelector('button').onclick = async ()=>{ await store.set('lf_banner_off', true); el.innerHTML=''; };
+}
+
+/* ================= PROGRAMME COMPLET (overlay) ================= */
+function docHTML(){
+  let s = '<button class="close" id="closeDoc" aria-label="Fermer">✕</button>';
+  s += '<h2 class="doc">Le programme</h2><div class="docsub">PPL Recomp · 5 séances · Milann · v1</div>';
+
+  s += '<h3 class="sec">La logique</h3>';
+  s += '<p><b>Objectif :</b> recomposition — construire du muscle en perdant du gras. À ton niveau de reprise, les deux sont compatibles si l\'entraînement est dur et la récupération sérieuse.</p>';
+  s += '<p><b>Structure :</b> PPL optimisé sur 5 jours. Push / Pull / Legs quadris, repos actif, puis Upper (Push B + Pull B) et journée Postérieur dédiée. Résultat : <b>chaque muscle est travaillé 2× par semaine</b> — ce que la recherche sur la fréquence favorise — et ta chaîne postérieure + tes abdos ont leur vraie place (demande de ton coach : back extensions incluses le samedi).</p>';
+  s += '<p><b>Priorité polyarticulaire :</b> chaque séance ouvre sur les mouvements composés lourds, l\'isolation vient après.</p>';
+
+  s += '<h3 class="sec">Les règles</h3><ul>';
+  s += '<li><b>Rodage (semaines 1–2) :</b> RIR 3–4 (arrête chaque série en gardant 3–4 reps en réserve), ~70 % de tes charges du Népal. Les tendons se réadaptent moins vite que les muscles — tes coudes te remercieront.</li>';
+  s += '<li><b>Régime de croisière (semaine 3+) :</b> composés à RIR 1–2, isolation à RIR 0–1 (l\'échec y est permis). C\'est le meilleur ratio stimulation / récupération selon la littérature — l\'échec systématique sur les composés fatigue plus qu\'il ne construit.</li>';
+  s += '<li><b>Progression double :</b> quand tu atteins le HAUT de la fourchette sur TOUTES les séries avec une technique propre → +2 kg (ou lest / variante plus dure au poids du corps). L\'app te l\'affiche avec le badge ▲.</li>';
+  s += '<li><b>Repos :</b> 2:30–3:00 sur les composés, 1:00–1:30 sur l\'isolation. Raccourcir l\'isolation ne coûte rien en croissance et te garde sous ~65 min.</li>';
+  s += '<li><b>Deload :</b> toutes les 6–8 semaines, ou après 2 séances consécutives de stagnation : une semaine à −40 % de séries, mêmes charges.</li>';
+  s += '<li><b>Coudes :</b> le bloc élastique de l\'échauffement est obligatoire les jours de push/pull. Douleur vive pendant une série = stop l\'exo du jour, pas de héroïsme tendineux.</li>';
+  s += '<li><b>Séance ratée ?</b> Rien à rattraper : tu reprends simplement le calendrier le lendemain. La régularité sur des mois bat la perfection sur une semaine.</li></ul>';
+
+  s += '<h3 class="sec">Charges de départ (semaine 1)</h3>';
+  s += '<p>Développé couché 2×10–12 · Incliné 2×8–10 · Militaire 2×8–10 · Latérales 2×4–6 · Rowing 1 bras 14–16 · Curls 2×6–8 · RDL 2×12–14 · Bulgare 2×8–10 · Goblet 1×16–20 · Hip thrust 1×20–24. Ajuste dès la première série : la fourchette de reps commande.</p>';
+
+  for(const d of [1,2,3,4,5,6,0]){
+    const D = DAYS[d];
+    s += '<div class="dayblock"><h4>'+DLETTER[d]+' — '+D.t+'</h4><div class="dm">'+(D.sub||'Récupération totale')+(D.dur? ' · '+D.dur:'')+'</div>';
+    if(D.off){ s += '<p>Sommeil 7–9 h. C\'est un jour d\'entraînement pour tes hormones.</p></div>'; continue; }
+    if(D.actif){ D.actif.forEach(b=>{ s += '<div class="exline"><div class="xn">→</div><div class="xb"><div class="xt">'+b.t+'</div><div class="xm">'+b.d+'</div></div></div>'; }); s += '</div>'; continue; }
+    D.ex.forEach((ex,i)=>{
+      const repTxt = Array.isArray(ex.r)? RANGE(ex.r[0],ex.r[1])+' reps' : ex.r;
+      s += '<div class="exline"><div class="xn">'+String(i+1).padStart(2,'0')+'</div><div class="xb"><div class="xt">'+ex.n+'</div><div class="xm">'+ex.s+' × '+repTxt+(ex.uni?' / '+ex.uni:'')+' · RIR '+ex.rir+' · repos '+Math.floor(ex.rest/60)+':'+String(ex.rest%60).padStart(2,'0')+'</div></div></div>';
+    });
+    s += '</div>';
+  }
+
+  s += '<h3 class="sec">Volume hebdo (séries dures)</h3>';
+  s += '<p>Pecs 13 · Dos 14–16 · Épaules 9–12 · Quadris 9 · Ischios + fessiers 13 · Biceps 8 (+ tractions) · Triceps 6 (+ développés) · Mollets 7 · Abdos 11–13 · Lombaires 3 (+ RDL). Tout est dans la zone efficace 10–20 pour les groupes prioritaires, calibré reprise.</p>';
+  s += '<footer>La Fonte · construit pour ton matériel exact · juillet 2026</footer>';
+  return s;
+}
+
+/* ================= INIT ================= */
+const overlay = document.getElementById('overlay');
+document.getElementById('openDoc').onclick = ()=>{
+  document.getElementById('ovinner').innerHTML = docHTML();
+  overlay.classList.add('open');
+  document.getElementById('closeDoc').onclick = ()=> overlay.classList.remove('open');
+};
+
+buildChips();
+banner();
+render();
+</script>
+</body>
+</html>
