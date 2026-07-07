@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="La Table">
 <link rel="apple-touch-icon" href="table-icon.png">
+<link rel="manifest" href="table.webmanifest">
 <title>La Table — Recomp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +28,9 @@
 body{margin:0; background:var(--bg); color:var(--ink); font-family:'Barlow',system-ui,sans-serif; font-size:16px; line-height:1.45; padding-bottom:110px}
 .wrap{max-width:520px; margin:0 auto; padding:0 14px}
 button{font-family:inherit}
+.iP{color:#9db9f7; font-weight:600}
+.iF{color:var(--amb); font-weight:600}
+.iC{color:#7cc79b; font-weight:600}
 
 /* ---------- Header ---------- */
 header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--bg) 82%, rgba(23,25,29,0)); padding-top:env(safe-area-inset-top)}
@@ -46,7 +50,7 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .datenav .dl small{display:block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--dim); letter-spacing:.1em; margin-top:1px}
 
 /* ---------- Jauges ---------- */
-.gauges{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px 14px 14px; margin-bottom:12px}
+.gauges{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px 14px 14px; margin-bottom:10px}
 .kcalrow{display:flex; align-items:baseline; gap:8px; justify-content:center}
 .kcalrow .big{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:34px; letter-spacing:-.01em}
 .kcalrow .of{font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--dim)}
@@ -67,15 +71,25 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .mc.over .mv{color:var(--red)}
 .mc.over .mbar i{background:var(--red)}
 
-/* ---------- Suggestions ---------- */
+/* ---------- Tickers repas ---------- */
+.ticks{display:flex; gap:7px; margin:0 0 10px}
+.tick{flex:1; border:1px solid var(--line); background:var(--card); color:var(--mut); border-radius:12px;
+  padding:9px 4px 7px; cursor:pointer; text-align:center}
+.tick .ti{font-size:17px; line-height:1}
+.tick .tl{font-family:'Barlow Condensed',sans-serif; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; margin-top:3px; font-weight:600}
+.tick.on{border-color:var(--blu-line); background:var(--blu-soft); color:#c9d8fb}
+.tick.wo{margin-left:6px}
+.tick.wo.on{border-color:rgba(67,160,102,.5); background:var(--grn-soft); color:#a9d9bd}
+
+/* ---------- Suggestion ---------- */
 .sugg{border-left:3px solid var(--grn); background:var(--card); border-radius:0 var(--r) var(--r) 0;
-  padding:10px 12px; margin:0 0 12px; font-size:13.5px; color:var(--mut)}
-.sugg b{color:var(--ink)}
-.sugg .sline{display:flex; justify-content:space-between; gap:10px; padding:4px 0}
-.sugg .sm{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dim); white-space:nowrap}
+  padding:11px 13px; margin:0 0 12px; font-size:13.5px; color:var(--mut)}
+.sugg .st{font-family:'Barlow Condensed',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink); font-weight:600}
+.sugg .sm{font-family:'IBM Plex Mono',monospace; font-size:12px; margin-top:5px; color:var(--ink); letter-spacing:.02em}
+.sugg .sd{margin-top:6px; line-height:1.5}
 
 /* ---------- Journal ---------- */
-.jtitle{font-family:'Barlow Condensed',sans-serif; font-size:21px; text-transform:uppercase; letter-spacing:.03em; margin:16px 0 8px; color:var(--mut)}
+.jtitle{font-family:'Barlow Condensed',sans-serif; font-size:21px; text-transform:uppercase; letter-spacing:.03em; margin:14px 0 8px; color:var(--mut)}
 .entry{display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line);
   border-radius:12px; padding:11px 12px; margin-bottom:8px; cursor:pointer}
 .entry .et{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); flex:0 0 34px}
@@ -105,11 +119,17 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .search{width:100%; background:var(--card); border:1px solid var(--line); border-radius:12px; color:var(--ink);
   font-size:16px; padding:12px 14px; outline:none; margin-bottom:10px}
 .search:focus-visible{border-color:var(--blu-line)}
-.cats{display:flex; gap:6px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none}
+.cats{display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
 .cat{flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--mut); border-radius:999px;
   padding:7px 13px; font-size:13.5px; cursor:pointer}
 .cat.on{border-color:var(--blu-line); background:var(--blu-soft); color:#9db9f7; font-weight:600}
+.sorts{display:flex; gap:6px; align-items:center; padding-bottom:10px; overflow-x:auto; scrollbar-width:none}
+.sorts::-webkit-scrollbar{display:none}
+.sorts .slab{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; flex:0 0 auto}
+.sortb{flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--mut); border-radius:9px;
+  padding:6px 11px; font-size:12.5px; cursor:pointer; font-family:'IBM Plex Mono',monospace}
+.sortb.on{border-color:var(--blu-line); background:var(--blu-soft); color:var(--ink)}
 .seclab{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; margin:12px 0 7px}
 .recents{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px}
 .recents::-webkit-scrollbar{display:none}
@@ -148,15 +168,17 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .pbtn.add{background:var(--grn); color:#fff}
 .pbtn.del{background:transparent; border:1px solid rgba(217,106,90,.4); color:var(--red); flex:0 0 auto; padding:15px 18px}
 
-/* éditeur d'aliment + réglages */
+/* éditeur + réglages */
 .fields{display:flex; flex-direction:column; gap:12px; margin-top:8px}
 .fields label{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; display:flex; flex-direction:column; gap:5px}
 .fields input, .fields select{background:var(--card); border:1px solid var(--line); border-radius:10px; color:var(--ink);
-  font-size:15px; padding:11px 12px; outline:none; width:100%; font-family:'Barlow',sans-serif}
+  font-size:15px; padding:11px 12px; outline:none; width:100%; font-family:'Barlow',sans-serif; -webkit-appearance:none}
 .fields input.mono{font-family:'IBM Plex Mono',monospace; font-weight:600}
 .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.h2s{font-family:'Barlow Condensed',sans-serif; font-size:22px; text-transform:uppercase; margin:22px 0 6px; letter-spacing:.02em}
 .savebar{display:flex; gap:9px; margin-top:18px}
-.note{font-size:13px; color:var(--dim); line-height:1.5; margin-top:14px}
+.note{font-size:13px; color:var(--dim); line-height:1.5; margin-top:12px}
+.note b{color:var(--mut)}
 .wrow{display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--mut); padding:6px 2px; border-bottom:1px dashed var(--line)}
 .avg{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink); margin-top:10px}
 footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); letter-spacing:.08em; text-transform:uppercase}
@@ -168,10 +190,10 @@ footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace
 <header class="top"><div class="wrap">
   <div class="brandrow">
     <div class="brand">
-      <span class="eyebrow">Milann · Recomp · déficit 500</span>
+      <span class="eyebrow" id="eyebrow">Recomp</span>
       <h1>La <span>Table</span></h1>
     </div>
-    <button class="docbtn" id="openSet">Cibles</button>
+    <button class="docbtn" id="openSet">Profil</button>
   </div>
 </div></header>
 
@@ -182,24 +204,22 @@ footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace
     <button class="arrow" id="dnext">›</button>
   </div>
   <div class="gauges" id="gauges"></div>
+  <div class="ticks" id="ticks"></div>
   <div id="suggbox"></div>
   <div class="jtitle">Journal</div>
   <div id="journal"></div>
-  <footer>Sauvegarde automatique · v1 · Juillet 2026</footer>
+  <footer>Sauvegarde automatique · v2 · Juillet 2026</footer>
 </div>
 
 <button id="addbtn">＋ Ajouter</button>
 
-<!-- Picker / portion / éditeur -->
 <div class="ov" id="pick"><div class="inner" id="pickin"></div></div>
-<!-- Réglages -->
 <div class="ov" id="setov"><div class="inner" id="setin"></div></div>
 
 <script>
 /* ================= BASE ALIMENTS (pour 100 g, étiquettes UE) ================= */
 const CATS = [['plat','Plats'],['acc','Accomp.'],['prot','Protéines'],['from','Fromages'],['fruit','Fruits'],['plac','Placard']];
 const FOODS_DEFAULT = [
- /* Plats maison */
  {id:'saumon', cat:'plat', n:"Pavé de saumon au four", k:210,p:24,f:13,c:0},
  {id:'cuisse', cat:'plat', n:"Cuisse de poulet rôtie", k:215,p:26,f:12,c:0, hint:"~150 g de chair par cuisse"},
  {id:'escmout', cat:'plat', n:"Escalope crème-moutarde", k:165,p:21,f:8,c:2},
@@ -214,7 +234,6 @@ const FOODS_DEFAULT = [
  {id:'merguez', cat:'plat', n:"Merguez grillée", k:310,p:16,f:27,c:1, hint:"~70 g pièce"},
  {id:'tandoori', cat:'plat', n:"Poulet tandoori au four", k:185,p:22,f:9,c:3},
  {id:'fajgar', cat:'plat', n:"Garniture fajitas poulet-poivrons", k:130,p:14,f:5,c:6},
- /* Accompagnements */
  {id:'riz', cat:'acc', n:"Riz basmati cuit", k:130,p:3,f:0.4,c:28, hint:"100 g sec ≈ 250 g cuit"},
  {id:'pdouce', cat:'acc', n:"Patate douce bouillie", k:78,p:1.4,f:0.1,c:17},
  {id:'pates', cat:'acc', n:"Pâtes cuites (nature)", k:150,p:5.5,f:1,c:30, hint:"100 g sec ≈ 240 g cuit"},
@@ -225,7 +244,6 @@ const FOODS_DEFAULT = [
  {id:'salade', cat:'acc', n:"Salade concombre-tomate (sans sauce)", k:18,p:0.9,f:0.2,c:2.5},
  {id:'tortilla', cat:'acc', n:"Tortilla de blé", k:310,p:8,f:7,c:52, hint:"~40 g pièce"},
  {id:'avocat', cat:'acc', n:"Avocat", k:160,p:1.8,f:15,c:1.8, hint:"~140 g de chair par avocat"},
- /* Protéines rapides */
  {id:'thon', cat:'prot', n:"Thon au naturel (égoutté)", k:110,p:25,f:1,c:0, hint:"1 boîte ≈ 112 g égoutté"},
  {id:'sardboite', cat:'prot', n:"Sardines à l'huile (égouttées)", k:200,p:24,f:12,c:0, hint:"1 boîte ≈ 90 g"},
  {id:'maquereau', cat:'prot', n:"Maquereau en boîte", k:190,p:20,f:12,c:0},
@@ -236,13 +254,11 @@ const FOODS_DEFAULT = [
  {id:'whey', cat:'prot', n:"Whey vanille", k:400,p:83,f:5,c:6, hint:"1 scoop = 15 g"},
  {id:'oeuf', cat:'prot', n:"Œuf entier", k:145,p:12.5,f:10,c:0.7, hint:"~55 g pièce"},
  {id:'hache5', cat:'prot', n:"Bœuf haché 5% (cru)", k:125,p:21,f:5,c:0},
- /* Fromages */
  {id:'comte', cat:'from', n:"Comté 12-18 mois", k:415,p:27,f:34,c:0},
  {id:'cantal', cat:'from', n:"Cantal entre-deux", k:375,p:23,f:31,c:0},
  {id:'brie', cat:'from', n:"Brie", k:335,p:20,f:28,c:0.5},
  {id:'stnect', cat:'from', n:"Saint-nectaire", k:330,p:21,f:27,c:0.5},
  {id:'meule', cat:'from', n:"Meule fruitée (Lidl)", k:395,p:26,f:32,c:0.5},
- /* Fruits */
  {id:'pomme', cat:'fruit', n:"Pomme", k:52,p:0.3,f:0.2,c:12, hint:"~180 g pièce"},
  {id:'banane', cat:'fruit', n:"Banane", k:90,p:1.1,f:0.3,c:20, hint:"~120 g épluchée"},
  {id:'peche', cat:'fruit', n:"Pêche / nectarine", k:45,p:0.9,f:0.2,c:9.5, hint:"~150 g pièce"},
@@ -250,7 +266,6 @@ const FOODS_DEFAULT = [
  {id:'prune', cat:'fruit', n:"Prune", k:48,p:0.7,f:0.2,c:10.5, hint:"~55 g pièce"},
  {id:'framb', cat:'fruit', n:"Framboises (surgelées)", k:42,p:1.2,f:0.6,c:4.5},
  {id:'miel', cat:'fruit', n:"Miel", k:325,p:0.3,f:0,c:80, hint:"~10 g le filet, 20 g la cuillère"},
- /* Placard */
  {id:'cajou', cat:'plac', n:"Noix de cajou", k:575,p:18,f:44,c:27, hint:"une poignée ≈ 30 g"},
  {id:'amande', cat:'plac', n:"Amandes", k:610,p:21,f:50,c:7, hint:"une poignée ≈ 30 g"},
  {id:'noix', cat:'plac', n:"Noix", k:655,p:15,f:63,c:7},
@@ -264,6 +279,7 @@ const FOODS_DEFAULT = [
  {id:'pb', cat:'plac', n:"Beurre de cacahuète", k:620,p:26,f:50,c:12, hint:"1 c. à soupe = 15 g"}
 ];
 const TARGETS_DEFAULT = {k:2050,p:143,f:50,c:257};
+const PROFILE_DEFAULT = {name:'Milann', sx:'h', age:28, cm:176, kg:72, act:1.55, goal:-500};
 
 /* ================= STOCKAGE ================= */
 const mem = {};
@@ -284,29 +300,41 @@ function iso(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0
 function todayISO(){ return iso(new Date()); }
 
 /* ================= ÉTAT ================= */
-let foods = null, targets = null, recents = [];
+let foods=null, targets=null, profile=null, recents=[];
 let viewDate = todayISO();
-let day = []; // entrées du jour affiché
-let pickCat = 'all', pickSearch = '';
+let day = [];
+let tick = {b:0,l:0,d:0,w:0};
+let pickCat='all', pickSearch='', pickSort=null;
 
+async function loadDayData(){
+  day = (await store.get('lt_day_'+viewDate)) || [];
+  tick = (await store.get('lt_tick_'+viewDate)) || {b:0,l:0,d:0,w:0};
+}
 async function loadAll(){
   foods = await store.get('lt_foods');
   if(!foods){ foods = JSON.parse(JSON.stringify(FOODS_DEFAULT)); await store.set('lt_foods', foods); }
   targets = (await store.get('lt_targets')) || {...TARGETS_DEFAULT};
+  profile = Object.assign({}, PROFILE_DEFAULT, (await store.get('lt_profile'))||{});
   recents = (await store.get('lt_recent')) || [];
-  day = (await store.get('lt_day_'+viewDate)) || [];
+  await loadDayData();
 }
 async function saveDay(){ await store.set('lt_day_'+viewDate, day); }
+async function saveTick(){ await store.set('lt_tick_'+viewDate, tick); }
 async function saveFoods(){ await store.set('lt_foods', foods); }
 
-/* ================= JAUGES + JOURNAL ================= */
+/* ================= HELPERS ================= */
+function macroLine(f){
+  return f.k+' kcal · <span class="iP">P</span> '+f.p+' · <span class="iF">L</span> '+f.f+' · <span class="iC">G</span> '+f.c;
+}
+function clamp(v,a,b){ return Math.min(b, Math.max(a, v)); }
 function totals(){
   const t = {k:0,p:0,f:0,c:0};
-  day.forEach(e=>{ const r = e.g/100; t.k+=e.u.k*r; t.p+=e.u.p*r; t.f+=e.u.f*r; t.c+=e.u.c*r; });
+  day.forEach(e=>{ const r=e.g/100; t.k+=e.u.k*r; t.p+=e.u.p*r; t.f+=e.u.f*r; t.c+=e.u.c*r; });
   return t;
 }
 function pct(v,t){ return Math.min(100, Math.round(v/t*100)); }
 
+/* ================= JAUGES ================= */
 function renderGauges(){
   const t = totals();
   const kOver = t.k > targets.k*1.03;
@@ -316,7 +344,7 @@ function renderGauges(){
    '<div class="kbar"><i style="width:'+pct(t.k,targets.k)+'%'+(kOver?';background:var(--red)':'')+'"></i></div>'+
    '<div class="kleft">'+(left>=0? "reste "+left+" kcal" : "dépassement +"+(-left)+" kcal")+'</div>'+
    '<div class="macros">'+mc('P','Protéines',t.p,targets.p)+mc('F','Lipides',t.f,targets.f)+mc('C','Glucides',t.c,targets.c)+'</div>';
-  renderSugg(t);
+  renderNext(t);
 }
 function mc(cls,label,v,t){
   const over = v > t*1.06;
@@ -325,38 +353,90 @@ function mc(cls,label,v,t){
    '<div class="mbar"><i style="width:'+pct(v,t)+'%"></i></div></div>';
 }
 
-/* Suggestions de comblement */
-const SUGG = [
- {n:"Thon (1 boîte égouttée)", g:"+28 g P · 123 kcal", p:28,f:1,c:0,k:123, kind:'p', lean:true},
- {n:"Fromage blanc 0% (250 g)", g:"+20 g P · 120 kcal", p:20,f:0.5,c:10,k:120, kind:'p', lean:true},
- {n:"Jambon cuit (3 tranches)", g:"+18 g P · 100 kcal", p:18,f:2.7,c:1,k:100, kind:'p', lean:true},
- {n:"Whey (1 scoop 15 g)", g:"+12 g P · 60 kcal", p:12.5,f:0.8,c:1,k:60, kind:'p', lean:true},
- {n:"2 œufs", g:"+14 g P · 160 kcal", p:14,f:11,c:1,k:160, kind:'p'},
- {n:"Sardines (1 boîte)", g:"+22 g P · 180 kcal", p:22,f:11,c:0,k:180, kind:'p'},
- {n:"Riz basmati cuit (200 g)", g:"+56 g C · 260 kcal", p:6,f:1,c:56,k:260, kind:'c'},
- {n:"Patate douce (250 g)", g:"+43 g C · 195 kcal", p:3.5,f:0,c:43,k:195, kind:'c'},
- {n:"Flocons d'avoine (60 g)", g:"+35 g C · 8 g P · 220 kcal", p:8,f:4,c:35,k:222, kind:'c'},
- {n:"Banane", g:"+24 g C · 110 kcal", p:1.3,f:0.4,c:24,k:110, kind:'c'}
-];
-function renderSugg(t){
-  const box = document.getElementById('suggbox');
-  const rK = targets.k - t.k, rP = targets.p - t.p, rF = targets.f - t.f, rC = targets.c - t.c;
-  if(t.k < targets.k*0.35 || rK < 90 || (rP<12 && rC<35)){ box.innerHTML=''; return; }
-  let picks = [];
-  if(rP >= 12){
-    let pool = SUGG.filter(s=>s.kind==='p' && s.k <= rK+80);
-    if(rF < 10) pool = pool.filter(s=>s.lean);
-    picks.push(...pool.slice(0,2));
-  }
-  if(rC >= 35){
-    const pool = SUGG.filter(s=>s.kind==='c' && s.k <= rK+80);
-    if(pool.length) picks.push(pool[0]);
-  }
-  if(!picks.length){ box.innerHTML=''; return; }
-  box.innerHTML = '<div class="sugg"><b>Pour combler :</b>'+
-    picks.map(s=>'<div class="sline"><span>'+s.n+'</span><span class="sm">'+s.g+'</span></div>').join('')+'</div>';
+/* ================= TICKERS ================= */
+const TICKDEF = [['b','🥐','Petit-déj'],['l','🍽️','Déjeuner'],['d','🌙','Dîner'],['w','🏋️','Workout']];
+function renderTicks(){
+  const el = document.getElementById('ticks');
+  el.innerHTML = TICKDEF.map(td=>
+   '<button class="tick'+(td[0]==='w'?' wo':'')+(tick[td[0]]?' on':'')+'" data-t="'+td[0]+'">'+
+   '<div class="ti">'+td[1]+'</div><div class="tl">'+td[2]+'</div></button>').join('');
+  el.querySelectorAll('.tick').forEach(b=> b.onclick = async ()=>{
+    const k = b.dataset.t;
+    tick[k] = tick[k]? 0 : 1;
+    await saveTick();
+    renderTicks(); renderGauges();
+  });
 }
 
+/* ================= SUGGESTION « PROCHAIN REPAS » ================= */
+const SLOTNAMES = {b:"Petit-déjeuner", l:"Déjeuner", w:"Autour du workout", d:"Dîner", c:"Collation du soir"};
+function suggCard(title, macroHTML, dish){
+  return '<div class="sugg"><div class="st">'+title+'</div>'+
+   (macroHTML? '<div class="sm">'+macroHTML+'</div>':'')+
+   (dish? '<div class="sd">'+dish+'</div>':'')+'</div>';
+}
+function dishFor(slot, S){
+  if(slot==='b'){
+    const av = clamp(Math.round((S.c-30)/0.58/10)*10, 40, 110);
+    const fb = clamp(Math.round((S.p - av*0.13 - 1.1)/0.08/25)*25, 100, 300);
+    return "≈ "+av+" g d'avoine + "+fb+" g de fromage blanc 0 % + 1 banane + un filet de miel";
+  }
+  if(slot==='l'){
+    const pr = clamp(Math.round(S.p/0.24/10)*10, 100, 280);
+    const rz = clamp(Math.round(S.c*0.85/0.28/10)*10, 100, 400);
+    return "sers-toi ≈ "+pr+" g de la protéine du plat + "+rz+" g de riz cuit (ou l'équivalent en patate douce ×1,6) + légumes à volonté";
+  }
+  if(slot==='w'){
+    if(S.p>=12) return "1 banane avant la séance · 1 scoop de whey ou 150 g de fromage blanc après";
+    return "1 banane avant la séance"+(S.c>40? " + un filet de miel":"");
+  }
+  if(slot==='d'){
+    const pr = clamp(Math.round(S.p/0.25/10)*10, 80, 250);
+    const rz = clamp(Math.round(S.c*0.8/0.28/10)*10, 0, 350);
+    const fr = clamp(Math.round((S.f-6)/0.32/5)*5, 0, 50);
+    let s = "≈ "+pr+" g de protéine maigre (thon, reste de poulet, jambon)"+(rz>=80? " + "+rz+" g de riz cuit":"")+" + salade";
+    s += fr>=15? ", et "+fr+" g de fromage rentrent dans ton budget gras" : " — fromage : passe ton tour ce soir, budget gras plein";
+    return s;
+  }
+  return "fromage blanc 0 % + framboises + un filet de miel, et au lit";
+}
+function renderNext(t){
+  const box = document.getElementById('suggbox');
+  if(viewDate !== todayISO()){ box.innerHTML=''; return; }
+  const R = {k:targets.k-t.k, p:targets.p-t.p, f:targets.f-t.f, c:targets.c-t.c};
+  const now = new Date(); const h = now.getHours() + now.getMinutes()/60;
+  const q = [];
+  if(!tick.b && h<11) q.push('b');
+  if(!tick.l && h<16) q.push('l');
+  if(!tick.w) q.push('w');
+  if(!tick.d) q.push('d');
+  let slot = null;
+  if(q.includes('b')) slot='b';
+  else if(q.includes('l')) slot='l';
+  else if(q.includes('w') && (tick.l || h>=14)) slot='w';
+  else if(q.includes('d')) slot='d';
+  else if(R.k>150) slot='c';
+
+  if(!slot){
+    box.innerHTML = R.k < -120
+      ? suggCard("Journée bouclée", null, "Dépassement de "+Math.round(-R.k)+" kcal — pas de drame, c'est la moyenne de la semaine qui commande. Demain, journée normale.")
+      : suggCard("Journée bouclée", null, "Tout est coché, budget plein. La suite se joue au sommeil.");
+    return;
+  }
+  if(R.k < 120 && slot!=='c'){
+    box.innerHTML = suggCard("Budget presque plein", null, "Il reste ~"+Math.max(0,Math.round(R.k))+" kcal. Reste léger : salade + protéine maigre (thon, jambon, fromage blanc 0 %).");
+    return;
+  }
+  const W = {b:.22, l:.34, w:.12, d:.32};
+  const sum = q.reduce((a,s)=>a+W[s],0) || 1;
+  const share = slot==='c' ? 1 : Math.min(1, W[slot]/sum);
+  const r5 = v=>Math.max(0, Math.round(v/5)*5);
+  const S = {k:Math.round(R.k*share/10)*10, p:r5(R.p*share), f:r5(Math.max(0,R.f)*share), c:r5(Math.max(0,R.c)*share)};
+  const macroHTML = "vise ≈ "+S.k+" kcal · <span class=\"iP\">P</span> "+S.p+" · <span class=\"iF\">L</span> "+S.f+" · <span class=\"iC\">G</span> "+S.c;
+  box.innerHTML = suggCard("Prochain : "+SLOTNAMES[slot], macroHTML, dishFor(slot,S));
+}
+
+/* ================= JOURNAL ================= */
 function renderJournal(){
   const j = document.getElementById('journal');
   if(!day.length){
@@ -370,10 +450,7 @@ function renderJournal(){
      '<div class="en"><div class="nn">'+e.n+'</div><div class="gg">'+e.g+' g</div></div>'+
      '<div class="ek">'+Math.round(e.u.k*r)+'<small>P '+Math.round(e.u.p*r)+'</small></div></div>';
   }).join('');
-  j.querySelectorAll('.entry').forEach(el=> el.addEventListener('click', ()=>{
-    const i = +el.dataset.i;
-    openPortionForEntry(i);
-  }));
+  j.querySelectorAll('.entry').forEach(el=> el.addEventListener('click', ()=> openPortionForEntry(+el.dataset.i)));
 }
 
 function renderDateNav(){
@@ -386,17 +463,20 @@ async function shiftDay(n){
   const d = new Date(viewDate+'T12:00:00'); d.setDate(d.getDate()+n);
   if(iso(d) > todayISO()) return;
   viewDate = iso(d);
-  day = (await store.get('lt_day_'+viewDate)) || [];
+  await loadDayData();
   renderAll();
 }
-function renderAll(){ renderDateNav(); renderGauges(); renderJournal(); }
+function renderAll(){
+  document.getElementById('eyebrow').textContent = (profile.name||'Profil')+" · Recomp · "+(profile.goal<0? "déficit "+(-profile.goal) : profile.goal>0? "surplus +"+profile.goal : "maintien");
+  renderDateNav(); renderGauges(); renderTicks(); renderJournal();
+}
 
 /* ================= PICKER ================= */
 const pick = document.getElementById('pick'), pickin = document.getElementById('pickin');
 function norm(s){ return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
 
 function openPicker(){
-  pickCat='all'; pickSearch='';
+  pickCat='all'; pickSearch=''; pickSort=null;
   renderPicker();
   pick.classList.add('open'); pick.scrollTop=0;
 }
@@ -405,16 +485,24 @@ function renderPicker(){
   s += '<input class="search" id="pksearch" type="search" placeholder="Rechercher…" value="'+pickSearch.replace(/"/g,'&quot;')+'">';
   s += '<div class="cats"><button class="cat'+(pickCat==='all'?' on':'')+'" data-c="all">Tous</button>'+
        CATS.map(c=>'<button class="cat'+(pickCat===c[0]?' on':'')+'" data-c="'+c[0]+'">'+c[1]+'</button>').join('')+'</div>';
-  if(!pickSearch && pickCat==='all' && recents.length){
+  const SORTS = [['k','kcal'],['p','<span class="iP">P</span>'],['f','<span class="iF">L</span>'],['c','<span class="iC">G</span>']];
+  s += '<div class="sorts"><span class="slab">Trier</span>'+
+    SORTS.map(x=>{
+      const on = pickSort && pickSort.key===x[0];
+      const arr = on? (pickSort.dir===-1? ' ↓':' ↑') : '';
+      return '<button class="sortb'+(on?' on':'')+'" data-s="'+x[0]+'">'+x[1]+arr+'</button>';
+    }).join('')+'</div>';
+  if(!pickSearch && pickCat==='all' && !pickSort && recents.length){
     const rf = recents.map(id=>foods.find(f=>f.id===id)).filter(Boolean).slice(0,8);
     if(rf.length) s += '<div class="seclab">Récents</div><div class="recents">'+
       rf.map(f=>'<button class="rc" data-id="'+f.id+'">'+f.n+'</button>').join('')+'</div>';
   }
   const q = norm(pickSearch);
-  const list = foods.filter(f=> (pickCat==='all'||f.cat===pickCat) && (!q || norm(f.n).includes(q)) );
+  let list = foods.filter(f=> (pickCat==='all'||f.cat===pickCat) && (!q || norm(f.n).includes(q)) );
+  if(pickSort) list = list.slice().sort((a,b)=> (a[pickSort.key]-b[pickSort.key])*pickSort.dir );
   s += '<div class="seclab">'+list.length+' aliment'+(list.length>1?'s':'')+' · valeurs pour 100 g</div>';
   s += list.map(f=>'<div class="frow" data-id="'+f.id+'"><div class="fn"><div class="nn">'+f.n+'</div>'+
-     '<div class="mm">'+f.k+' kcal · P '+f.p+' · L '+f.f+' · G '+f.c+'</div></div>'+
+     '<div class="mm">'+macroLine(f)+'</div></div>'+
      '<button class="fpen" data-pen="'+f.id+'">✎</button></div>').join('');
   s += '<button class="newfood" id="pknew">+ Créer un aliment</button>';
   pickin.innerHTML = s;
@@ -423,6 +511,13 @@ function renderPicker(){
   const si = document.getElementById('pksearch');
   si.addEventListener('input', ()=>{ pickSearch = si.value; renderPicker(); const s2=document.getElementById('pksearch'); s2.focus(); s2.setSelectionRange(s2.value.length,s2.value.length); });
   pickin.querySelectorAll('.cat').forEach(b=> b.onclick = ()=>{ pickCat=b.dataset.c; renderPicker(); });
+  pickin.querySelectorAll('.sortb').forEach(b=> b.onclick = ()=>{
+    const k = b.dataset.s;
+    if(!pickSort || pickSort.key!==k) pickSort = {key:k, dir:-1};
+    else if(pickSort.dir===-1) pickSort = {key:k, dir:1};
+    else pickSort = null;
+    renderPicker();
+  });
   pickin.querySelectorAll('.frow').forEach(r=> r.addEventListener('click', (ev)=>{
     if(ev.target.closest('.fpen')) return;
     openPortion(r.dataset.id);
@@ -443,7 +538,7 @@ function livemHTML(f,g){
 function portionView(f, g0, editIdx){
   let s = '<div class="ovhead"><button class="back" id="pback">‹</button><h2>'+(editIdx!=null?'Modifier':'Portion')+'</h2></div>';
   s += '<div class="pcard"><h3>'+f.n+'</h3>'+
-   '<div class="per">'+f.k+' kcal · P '+f.p+' · L '+f.f+' · G '+f.c+' — pour 100 g</div>'+
+   '<div class="per">'+macroLine(f)+' — pour 100 g</div>'+
    (f.hint? '<div class="hint">'+f.hint+'</div>':'')+
    '<div class="gramctl"><button class="gb" id="gminus">−</button><input type="number" inputmode="decimal" id="gin" value="'+g0+'"><button class="gb" id="gplus">＋</button></div>'+
    '<div class="gramu">grammes</div>'+
@@ -535,32 +630,76 @@ function openFoodEditor(fid){
   };
 }
 
-/* ================= RÉGLAGES ================= */
+/* ================= PROFIL & CIBLES ================= */
 const setov = document.getElementById('setov'), setin = document.getElementById('setin');
+function computeTargets(pr){
+  const bmr = 10*pr.kg + 6.25*pr.cm - 5*pr.age + (pr.sx==='h'? 5 : -161);
+  const k = Math.max(1200, Math.round((bmr*pr.act + pr.goal)/10)*10);
+  const p = Math.round(pr.kg*1.98);
+  const f = Math.round(pr.kg*0.66);
+  const c = Math.max(0, Math.round((k - p*4 - f*9)/4));
+  return {k,p,f,c};
+}
+function readProfileFields(){
+  return {
+    name: document.getElementById('pf-name').value.trim() || 'Profil',
+    sx: document.getElementById('pf-sx').value,
+    age: clamp(parseInt(document.getElementById('pf-age').value)||28, 10, 100),
+    cm: clamp(parseInt(document.getElementById('pf-cm').value)||176, 120, 230),
+    kg: clamp(parseFloat(document.getElementById('pf-kg').value)||72, 30, 250),
+    act: parseFloat(document.getElementById('pf-act').value)||1.55,
+    goal: parseInt(document.getElementById('pf-goal').value)||0
+  };
+}
 async function openSettings(){
   const w = (await store.get('lt_w')) || [];
   const last7 = w.slice(-7);
   const avg = last7.length? (last7.reduce((a,x)=>a+x.kg,0)/last7.length).toFixed(1) : null;
-  let s = '<div class="ovhead"><button class="back" id="stclose">✕</button><h2>Cibles & suivi</h2></div>';
-  s += '<div class="fields"><div class="grid2">'+
+  const ACTS = [[1.2,'Sédentaire (bureau, peu de sport)'],[1.375,'Léger (1-3 séances/sem)'],[1.55,'Modéré (3-5 séances/sem)'],[1.725,'Actif (6-7 séances/sem)'],[1.9,'Très actif (physique + sport)']];
+  const GOALS = [[-500,'Sèche (−500 kcal)'],[-300,'Perte douce (−300 kcal)'],[0,'Maintien'],[300,'Prise de masse (+300 kcal)']];
+  let s = '<div class="ovhead"><button class="back" id="stclose">✕</button><h2>Profil & cibles</h2></div>';
+  s += '<div class="h2s" style="margin-top:4px">Profil</div><div class="fields">'+
+   '<label>Prénom<input type="text" id="pf-name" value="'+(profile.name||'').replace(/"/g,'&quot;')+'"></label>'+
+   '<div class="grid2">'+
+    '<label>Sexe<select id="pf-sx"><option value="h"'+(profile.sx==='h'?' selected':'')+'>Homme</option><option value="f"'+(profile.sx==='f'?' selected':'')+'>Femme</option></select></label>'+
+    '<label>Âge<input class="mono" type="number" id="pf-age" value="'+profile.age+'"></label>'+
+    '<label>Taille (cm)<input class="mono" type="number" id="pf-cm" value="'+profile.cm+'"></label>'+
+    '<label>Poids (kg)<input class="mono" type="number" step="0.1" id="pf-kg" value="'+profile.kg+'"></label>'+
+   '</div>'+
+   '<label>Niveau d\'activité<select id="pf-act">'+ACTS.map(a=>'<option value="'+a[0]+'"'+(profile.act==a[0]?' selected':'')+'>'+a[1]+'</option>').join('')+'</select></label>'+
+   '<label>Objectif<select id="pf-goal">'+GOALS.map(g=>'<option value="'+g[0]+'"'+(profile.goal==g[0]?' selected':'')+'>'+g[1]+'</option>').join('')+'</select></label>'+
+  '</div>';
+  s += '<button class="pbtn add" id="pf-calc" style="margin-top:12px;width:100%">Calculer mes cibles à partir du profil</button>';
+  s += '<div class="note">Formule Mifflin-St Jeor × activité, protéines à ~2 g/kg, lipides à ~0,66 g/kg, glucides = le reste. Le calcul remplit les cases ci-dessous — tu peux les ajuster à la main avant d\'enregistrer.</div>';
+  s += '<div class="h2s">Cibles du jour</div><div class="fields"><div class="grid2">'+
    '<label>Calories (kcal)<input class="mono" type="number" id="t-k" value="'+targets.k+'"></label>'+
    '<label>Protéines (g)<input class="mono" type="number" id="t-p" value="'+targets.p+'"></label>'+
    '<label>Lipides (g)<input class="mono" type="number" id="t-f" value="'+targets.f+'"></label>'+
    '<label>Glucides (g)<input class="mono" type="number" id="t-c" value="'+targets.c+'"></label>'+
   '</div></div>';
-  s += '<div class="note">Réglé pour 72 kg : P = 0,9 g/lb (fourchette 127–159) · L ≈ 50 g en moyenne (45 les jours saumon-riz, 65 les jours curry/BBQ — ajuste à la journée si besoin) · G = le reste du budget. La vraie boussole : la <b>pesée du matin</b> — la moyenne 7 j doit descendre de ~0,3 kg/sem. Plus vite → +glucides. Plus lentement → −glucides.</div>';
-  s += '<h2 style="font-family:\'Barlow Condensed\',sans-serif;font-size:22px;text-transform:uppercase;margin:22px 0 8px">Poids du matin</h2>';
-  s += '<div class="fields"><label>Aujourd\'hui (kg)<input class="mono" type="number" inputmode="decimal" step="0.1" id="w-in" placeholder="72.0"></label></div>';
+  s += '<button class="pbtn add" id="t-ok" style="margin-top:12px;width:100%">Enregistrer profil & cibles</button>';
+  s += '<div class="note">Lipides : la cible est une moyenne — 45 g les jours saumon-riz, 65 g les jours curry/BBQ, ça s\'équilibre sur la semaine. La vraie boussole reste la <b>pesée du matin</b> : la moyenne 7 j doit bouger de ~0,3 kg/sem dans le sens de ton objectif. Plus vite → +glucides. Plus lentement → −glucides.</div>';
+  s += '<div class="h2s">Poids du matin</div>';
+  s += '<div class="fields"><label>Aujourd\'hui (kg)<input class="mono" type="number" inputmode="decimal" step="0.1" id="w-in" placeholder="'+profile.kg+'"></label></div>';
   s += '<button class="pbtn add" id="w-ok" style="margin-top:10px;width:100%">Enregistrer le poids</button>';
   if(avg) s += '<div class="avg">Moyenne 7 derniers relevés : <b>'+avg+' kg</b></div>';
   if(last7.length) s += '<div style="margin-top:8px">'+last7.slice().reverse().map(x=>'<div class="wrow"><span>'+x.d+'</span><span>'+x.kg.toFixed(1)+' kg</span></div>').join('')+'</div>';
-  s += '<button class="pbtn add" id="t-ok" style="margin-top:22px;width:100%">Enregistrer les cibles</button>';
-  s += '<button class="newfood" id="t-reset" style="margin-top:10px">Restaurer la base d\'aliments par défaut</button>';
+  s += '<button class="newfood" id="t-reset" style="margin-top:22px">Restaurer la base d\'aliments par défaut</button>';
   setin.innerHTML = s;
   setov.classList.add('open'); setov.scrollTop=0;
 
   document.getElementById('stclose').onclick = ()=> setov.classList.remove('open');
+  document.getElementById('pf-calc').onclick = ()=>{
+    const pr = readProfileFields();
+    const t = computeTargets(pr);
+    document.getElementById('t-k').value = t.k;
+    document.getElementById('t-p').value = t.p;
+    document.getElementById('t-f').value = t.f;
+    document.getElementById('t-c').value = t.c;
+  };
   document.getElementById('t-ok').onclick = async ()=>{
+    profile = readProfileFields();
+    await store.set('lt_profile', profile);
     targets = {
       k: parseInt(document.getElementById('t-k').value)||targets.k,
       p: parseInt(document.getElementById('t-p').value)||targets.p,
@@ -579,6 +718,8 @@ async function openSettings(){
     if(i>=0) arr[i].kg = kg; else arr.push({d:t, kg:kg});
     while(arr.length>60) arr.shift();
     await store.set('lt_w', arr);
+    profile.kg = kg;
+    await store.set('lt_profile', profile);
     openSettings();
   };
   document.getElementById('t-reset').onclick = async ()=>{
@@ -594,6 +735,10 @@ document.getElementById('addbtn').onclick = openPicker;
 document.getElementById('openSet').onclick = openSettings;
 document.getElementById('dprev').onclick = ()=> shiftDay(-1);
 document.getElementById('dnext').onclick = ()=> shiftDay(1);
+
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
 
 (async function init(){
   await loadAll();
