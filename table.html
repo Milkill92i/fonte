@@ -32,7 +32,6 @@ button{font-family:inherit}
 .iF{color:var(--amb); font-weight:600}
 .iC{color:#7cc79b; font-weight:600}
 
-/* ---------- Header ---------- */
 header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--bg) 82%, rgba(23,25,29,0)); padding-top:env(safe-area-inset-top)}
 .brandrow{display:flex; align-items:center; justify-content:space-between; padding:14px 2px 10px}
 .brand .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; color:var(--dim); text-transform:uppercase}
@@ -43,13 +42,11 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
   padding:9px 14px; border-radius:999px; cursor:pointer; text-transform:uppercase}
 .docbtn:active{transform:scale(.97)}
 
-/* ---------- Date nav ---------- */
 .datenav{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:2px 0 12px}
 .datenav .arrow{width:40px; height:36px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--mut); font-size:17px; cursor:pointer}
 .datenav .dl{font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:19px; text-transform:uppercase; letter-spacing:.04em; text-align:center; flex:1}
 .datenav .dl small{display:block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--dim); letter-spacing:.1em; margin-top:1px}
 
-/* ---------- Jauges ---------- */
 .gauges{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px 14px 14px; margin-bottom:10px}
 .kcalrow{display:flex; align-items:baseline; gap:8px; justify-content:center}
 .kcalrow .big{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:34px; letter-spacing:-.01em}
@@ -71,7 +68,6 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .mc.over .mv{color:var(--red)}
 .mc.over .mbar i{background:var(--red)}
 
-/* ---------- Tickers repas ---------- */
 .ticks{display:flex; gap:7px; margin:0 0 10px}
 .tick{flex:1; border:1px solid var(--line); background:var(--card); color:var(--mut); border-radius:12px;
   padding:9px 4px 7px; cursor:pointer; text-align:center}
@@ -80,15 +76,21 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .tick.on{border-color:var(--blu-line); background:var(--blu-soft); color:#c9d8fb}
 .tick.wo{margin-left:6px}
 .tick.wo.on{border-color:rgba(67,160,102,.5); background:var(--grn-soft); color:#a9d9bd}
+.burn{display:flex; gap:8px; align-items:center; background:var(--card); border:1px solid rgba(67,160,102,.4);
+  border-radius:12px; padding:10px 12px; margin:0 0 10px}
+.burn .bl{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.06em; flex:0 0 auto}
+.burn input{flex:1; min-width:0; background:var(--bg); border:1px solid var(--line); border-radius:9px; color:var(--ink);
+  font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600; padding:9px 8px; text-align:center; outline:none}
+.burn button{border:none; border-radius:9px; padding:10px 13px; font-size:13.5px; font-weight:600; cursor:pointer}
+.burn .bok{background:var(--grn); color:#fff}
+.burn .bno{background:transparent; border:1px solid var(--line2); color:var(--mut)}
 
-/* ---------- Suggestion ---------- */
 .sugg{border-left:3px solid var(--grn); background:var(--card); border-radius:0 var(--r) var(--r) 0;
   padding:11px 13px; margin:0 0 12px; font-size:13.5px; color:var(--mut)}
 .sugg .st{font-family:'Barlow Condensed',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink); font-weight:600}
 .sugg .sm{font-family:'IBM Plex Mono',monospace; font-size:12px; margin-top:5px; color:var(--ink); letter-spacing:.02em}
 .sugg .sd{margin-top:6px; line-height:1.5}
 
-/* ---------- Journal ---------- */
 .jtitle{font-family:'Barlow Condensed',sans-serif; font-size:21px; text-transform:uppercase; letter-spacing:.03em; margin:14px 0 8px; color:var(--mut)}
 .entry{display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line);
   border-radius:12px; padding:11px 12px; margin-bottom:8px; cursor:pointer}
@@ -100,14 +102,12 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .entry .ek small{display:block; font-size:9.5px; color:#9db9f7; font-weight:500; margin-top:1px}
 .empty{text-align:center; color:var(--dim); padding:26px 10px; font-size:14.5px}
 
-/* ---------- Bouton ajouter ---------- */
 #addbtn{position:fixed; left:50%; transform:translateX(-50%); bottom:calc(16px + env(safe-area-inset-bottom));
   z-index:80; display:flex; align-items:center; gap:9px; background:var(--grn); color:#fff; border:none;
   border-radius:999px; padding:14px 26px; font-size:16px; font-weight:600; cursor:pointer;
   box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #addbtn:active{transform:translateX(-50%) scale(.97)}
 
-/* ---------- Overlays ---------- */
 .ov{position:fixed; inset:0; z-index:100; background:var(--bg); overflow-y:auto; display:none; -webkit-overflow-scrolling:touch}
 .ov.open{display:block}
 .ov .inner{max-width:560px; margin:0 auto; padding:14px 16px 120px}
@@ -115,7 +115,6 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .ovhead .back{width:44px; height:44px; border-radius:50%; border:1px solid var(--line2); background:var(--card); color:var(--ink); font-size:18px; cursor:pointer; flex:0 0 auto}
 .ovhead h2{font-family:'Barlow Condensed',sans-serif; font-size:26px; text-transform:uppercase; margin:0; letter-spacing:.02em; flex:1}
 
-/* picker */
 .search{width:100%; background:var(--card); border:1px solid var(--line); border-radius:12px; color:var(--ink);
   font-size:16px; padding:12px 14px; outline:none; margin-bottom:10px}
 .search:focus-visible{border-color:var(--blu-line)}
@@ -124,12 +123,14 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .cat{flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--mut); border-radius:999px;
   padding:7px 13px; font-size:13.5px; cursor:pointer}
 .cat.on{border-color:var(--blu-line); background:var(--blu-soft); color:#9db9f7; font-weight:600}
-.sorts{display:flex; gap:6px; align-items:center; padding-bottom:10px; overflow-x:auto; scrollbar-width:none}
+.sorts{display:flex; gap:6px; align-items:center; padding-bottom:8px; overflow-x:auto; scrollbar-width:none}
 .sorts::-webkit-scrollbar{display:none}
 .sorts .slab{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; flex:0 0 auto}
 .sortb{flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--mut); border-radius:9px;
   padding:6px 11px; font-size:12.5px; cursor:pointer; font-family:'IBM Plex Mono',monospace}
 .sortb.on{border-color:var(--blu-line); background:var(--blu-soft); color:var(--ink)}
+.scanbtn{width:100%; border:1px dashed var(--blu-line); background:var(--blu-soft); color:#c9d8fb; border-radius:12px;
+  padding:12px; font-size:15px; font-weight:600; cursor:pointer; margin-bottom:10px}
 .seclab{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; margin:12px 0 7px}
 .recents{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px}
 .recents::-webkit-scrollbar{display:none}
@@ -144,11 +145,13 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .newfood{width:100%; border:1px dashed var(--line2); background:transparent; color:var(--mut); border-radius:var(--r);
   padding:14px; font-size:15px; font-weight:600; cursor:pointer; margin-top:6px}
 
-/* portion */
 .pcard{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px 14px; margin-top:4px}
 .pcard h3{font-family:'Barlow Condensed',sans-serif; font-size:26px; text-transform:uppercase; margin:0; line-height:1.05}
 .pcard .per{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--dim); margin-top:6px; letter-spacing:.03em}
 .pcard .hint{font-size:13px; color:var(--mut); margin-top:6px}
+#scanbox{background:#000; border-radius:12px; overflow:hidden; min-height:220px; position:relative}
+#scanbox video{width:100%; display:block; max-height:320px; object-fit:cover}
+.scst{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mut); text-align:center; margin-top:10px; letter-spacing:.03em}
 .gramctl{display:flex; align-items:center; justify-content:center; gap:14px; margin:18px 0 6px}
 .gramctl .gb{width:52px; height:52px; border-radius:14px; border:1px solid var(--line2); background:var(--card2); color:var(--ink); font-size:22px; cursor:pointer}
 .gramctl input{width:110px; background:var(--bg); border:1px solid var(--line); border-radius:12px; color:var(--ink);
@@ -166,9 +169,9 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .pactions{display:flex; gap:9px; margin-top:16px}
 .pbtn{flex:1; border:none; border-radius:12px; padding:15px; font-size:16px; font-weight:600; cursor:pointer}
 .pbtn.add{background:var(--grn); color:#fff}
+.pbtn.sec{background:var(--card2); border:1px solid var(--line2); color:var(--ink)}
 .pbtn.del{background:transparent; border:1px solid rgba(217,106,90,.4); color:var(--red); flex:0 0 auto; padding:15px 18px}
 
-/* éditeur + réglages */
 .fields{display:flex; flex-direction:column; gap:12px; margin-top:8px}
 .fields label{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.08em; display:flex; flex-direction:column; gap:5px}
 .fields input, .fields select{background:var(--card); border:1px solid var(--line); border-radius:10px; color:var(--ink);
@@ -176,7 +179,7 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .fields input.mono{font-family:'IBM Plex Mono',monospace; font-weight:600}
 .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
 .h2s{font-family:'Barlow Condensed',sans-serif; font-size:22px; text-transform:uppercase; margin:22px 0 6px; letter-spacing:.02em}
-.savebar{display:flex; gap:9px; margin-top:18px}
+.savebar{display:flex; gap:9px; margin-top:14px}
 .note{font-size:13px; color:var(--dim); line-height:1.5; margin-top:12px}
 .note b{color:var(--mut)}
 .wrow{display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--mut); padding:6px 2px; border-bottom:1px dashed var(--line)}
@@ -205,10 +208,11 @@ footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace
   </div>
   <div class="gauges" id="gauges"></div>
   <div class="ticks" id="ticks"></div>
+  <div id="burnbox"></div>
   <div id="suggbox"></div>
   <div class="jtitle">Journal</div>
   <div id="journal"></div>
-  <footer>Sauvegarde automatique · v2 · Juillet 2026</footer>
+  <footer>Sauvegarde automatique · v3 · Juillet 2026</footer>
 </div>
 
 <button id="addbtn">＋ Ajouter</button>
@@ -217,9 +221,10 @@ footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace
 <div class="ov" id="setov"><div class="inner" id="setin"></div></div>
 
 <script>
-/* ================= BASE ALIMENTS (pour 100 g, étiquettes UE) ================= */
-const CATS = [['plat','Plats'],['acc','Accomp.'],['prot','Protéines'],['from','Fromages'],['fruit','Fruits'],['plac','Placard']];
+/* ================= CATÉGORIES & BASE ALIMENTS (pour 100 g, étiquettes UE) ================= */
+const CATS = [['plat','Plats'],['acc','Accomp.'],['leg','Légumes'],['prot','Protéines'],['from','Fromages'],['fruit','Fruits'],['plac','Placard']];
 const FOODS_DEFAULT = [
+ /* Plats maison */
  {id:'saumon', cat:'plat', n:"Pavé de saumon au four", k:210,p:24,f:13,c:0},
  {id:'cuisse', cat:'plat', n:"Cuisse de poulet rôtie", k:215,p:26,f:12,c:0, hint:"~150 g de chair par cuisse"},
  {id:'escmout', cat:'plat', n:"Escalope crème-moutarde", k:165,p:21,f:8,c:2},
@@ -234,49 +239,135 @@ const FOODS_DEFAULT = [
  {id:'merguez', cat:'plat', n:"Merguez grillée", k:310,p:16,f:27,c:1, hint:"~70 g pièce"},
  {id:'tandoori', cat:'plat', n:"Poulet tandoori au four", k:185,p:22,f:9,c:3},
  {id:'fajgar', cat:'plat', n:"Garniture fajitas poulet-poivrons", k:130,p:14,f:5,c:6},
+ /* Accompagnements & féculents */
  {id:'riz', cat:'acc', n:"Riz basmati cuit", k:130,p:3,f:0.4,c:28, hint:"100 g sec ≈ 250 g cuit"},
+ {id:'rizcomplet', cat:'acc', n:"Riz complet cuit", k:125,p:2.8,f:1,c:25},
  {id:'pdouce', cat:'acc', n:"Patate douce bouillie", k:78,p:1.4,f:0.1,c:17},
  {id:'pates', cat:'acc', n:"Pâtes cuites (nature)", k:150,p:5.5,f:1,c:30, hint:"100 g sec ≈ 240 g cuit"},
+ {id:'pdtvap', cat:'acc', n:"Pommes de terre vapeur", k:80,p:1.8,f:0.1,c:17},
+ {id:'pdtsaut', cat:'acc', n:"Pommes de terre sautées", k:160,p:2.2,f:7,c:21},
+ {id:'puree', cat:'acc', n:"Purée maison", k:105,p:2,f:4,c:14},
+ {id:'fritesfour', cat:'acc', n:"Frites au four", k:170,p:2.5,f:5.5,c:27},
+ {id:'quinoa', cat:'acc', n:"Quinoa cuit", k:120,p:4.4,f:1.9,c:19},
+ {id:'semoule', cat:'acc', n:"Semoule / couscous (cuite)", k:115,p:4,f:0.5,c:23},
+ {id:'boulgour', cat:'acc', n:"Boulgour cuit", k:110,p:3.5,f:0.3,c:22},
+ {id:'gnocchi', cat:'acc', n:"Gnocchis (cuits)", k:150,p:4,f:0.5,c:32},
+ {id:'lentilles', cat:'acc', n:"Lentilles cuites", k:115,p:9,f:0.5,c:17},
+ {id:'poisch', cat:'acc', n:"Pois chiches (cuits)", k:140,p:8,f:2.5,c:19},
+ {id:'haricrouges', cat:'acc', n:"Haricots rouges (cuits)", k:110,p:8,f:0.5,c:16},
  {id:'harictom', cat:'acc', n:"Haricots à la tomate", k:85,p:4.7,f:0.5,c:13},
- {id:'haricv', cat:'acc', n:"Haricots verts", k:25,p:1.8,f:0.2,c:3.5},
- {id:'brocoli', cat:'acc', n:"Brocoli poêlé", k:55,p:3,f:3,c:3.5},
- {id:'ratat', cat:'acc', n:"Ratatouille", k:65,p:1.2,f:4.5,c:5},
- {id:'salade', cat:'acc', n:"Salade concombre-tomate (sans sauce)", k:18,p:0.9,f:0.2,c:2.5},
+ {id:'mais', cat:'acc', n:"Maïs (boîte)", k:90,p:2.8,f:1.2,c:16},
+ {id:'petitspois', cat:'acc', n:"Petits pois", k:70,p:5,f:0.5,c:9},
+ {id:'baguette', cat:'acc', n:"Pain baguette", k:270,p:9,f:1.5,c:55, hint:"~50 g le morceau"},
+ {id:'paincomplet', cat:'acc', n:"Pain complet", k:245,p:10,f:2.5,c:43, hint:"~35 g la tranche"},
+ {id:'painmie', cat:'acc', n:"Pain de mie", k:265,p:8,f:3.5,c:48, hint:"~35 g la tranche"},
  {id:'tortilla', cat:'acc', n:"Tortilla de blé", k:310,p:8,f:7,c:52, hint:"~40 g pièce"},
- {id:'avocat', cat:'acc', n:"Avocat", k:160,p:1.8,f:15,c:1.8, hint:"~140 g de chair par avocat"},
+ {id:'sal_tab', cat:'acc', n:"Saladinette · Taboulé oriental", k:167,p:4.1,f:5.6,c:24},
+ {id:'sal_cel', cat:'acc', n:"Saladinette · Céleri rémoulade", k:93,p:1,f:7.6,c:3.7},
+ {id:'sal_col', cat:'acc', n:"Saladinette · Coleslaw", k:109,p:0.9,f:7.7,c:7.9},
+ {id:'sal_pie', cat:'acc', n:"Saladinette · Piémontaise", k:129,p:3.7,f:8.6,c:8.5},
+ {id:'sal_bet', cat:'acc', n:"Saladinette · Betteraves à l'échalote", k:66,p:1.1,f:3.9,c:5.3},
+ /* Légumes */
+ {id:'haricv', cat:'leg', n:"Haricots verts", k:25,p:1.8,f:0.2,c:3.5},
+ {id:'brocoli', cat:'leg', n:"Brocoli poêlé", k:55,p:3,f:3,c:3.5},
+ {id:'ratat', cat:'leg', n:"Ratatouille", k:65,p:1.2,f:4.5,c:5},
+ {id:'salade', cat:'leg', n:"Salade concombre-tomate (sans sauce)", k:18,p:0.9,f:0.2,c:2.5},
+ {id:'avocat', cat:'leg', n:"Avocat", k:160,p:1.8,f:15,c:1.8, hint:"~140 g de chair par avocat"},
+ {id:'courgette', cat:'leg', n:"Courgette cuite", k:20,p:1.2,f:0.3,c:2.5},
+ {id:'carotte', cat:'leg', n:"Carotte", k:38,p:0.8,f:0.2,c:7.5},
+ {id:'tomate', cat:'leg', n:"Tomate", k:19,p:0.9,f:0.2,c:3, hint:"~120 g pièce"},
+ {id:'concombre', cat:'leg', n:"Concombre", k:13,p:0.6,f:0.1,c:2},
+ {id:'poivron', cat:'leg', n:"Poivron", k:26,p:1,f:0.3,c:5},
+ {id:'champ', cat:'leg', n:"Champignons poêlés", k:45,p:3,f:2.5,c:2.5},
+ {id:'epinards', cat:'leg', n:"Épinards cuits", k:25,p:3,f:0.5,c:1.5},
+ {id:'choufleur', cat:'leg', n:"Chou-fleur cuit", k:26,p:2,f:0.3,c:3},
+ {id:'oignon', cat:'leg', n:"Oignon", k:40,p:1.2,f:0.1,c:8},
+ /* Protéines rapides */
  {id:'thon', cat:'prot', n:"Thon au naturel (égoutté)", k:110,p:25,f:1,c:0, hint:"1 boîte ≈ 112 g égoutté"},
+ {id:'thonfrais', cat:'prot', n:"Steak de thon frais (cuit)", k:135,p:28,f:2,c:0},
  {id:'sardboite', cat:'prot', n:"Sardines à l'huile (égouttées)", k:200,p:24,f:12,c:0, hint:"1 boîte ≈ 90 g"},
  {id:'maquereau', cat:'prot', n:"Maquereau en boîte", k:190,p:20,f:12,c:0},
+ {id:'dorade', cat:'prot', n:"Filet de dorade (cuit)", k:120,p:24,f:3,c:0},
+ {id:'cabillaud', cat:'prot', n:"Cabillaud (cuit)", k:105,p:23,f:1,c:0},
+ {id:'colin', cat:'prot', n:"Colin / merlu (cuit)", k:95,p:21,f:1,c:0},
+ {id:'crevettes', cat:'prot', n:"Crevettes cuites", k:100,p:22,f:1,c:0.5},
+ {id:'saumonfume', cat:'prot', n:"Saumon fumé", k:180,p:23,f:10,c:0.5, hint:"~30 g la tranche"},
+ {id:'pouletgr', cat:'prot', n:"Blanc de poulet grillé", k:160,p:30,f:3.5,c:0},
+ {id:'dinde', cat:'prot', n:"Escalope de dinde (cuite)", k:150,p:29,f:2,c:0},
+ {id:'hache5', cat:'prot', n:"Bœuf haché 5% (cru)", k:125,p:21,f:5,c:0},
+ {id:'hache15', cat:'prot', n:"Steak haché 15% (cuit)", k:230,p:24,f:15,c:0},
+ {id:'porcfilet', cat:'prot', n:"Filet mignon de porc (cuit)", k:140,p:26,f:4,c:0},
+ {id:'cotporc', cat:'prot', n:"Côte de porc grillée", k:230,p:27,f:14,c:0},
+ {id:'lardons', cat:'prot', n:"Lardons (poêlés)", k:280,p:14,f:25,c:0.5},
  {id:'jambonc', cat:'prot', n:"Jambon cuit", k:110,p:20,f:3,c:1, hint:"~40 g la tranche"},
  {id:'jamboncru', cat:'prot', n:"Jambon cru", k:210,p:25,f:12,c:0.5, hint:"~15 g la tranche"},
+ {id:'oeuf', cat:'prot', n:"Œuf entier", k:145,p:12.5,f:10,c:0.7, hint:"~55 g pièce"},
+ {id:'blancoeuf', cat:'prot', n:"Blanc d'œuf", k:48,p:11,f:0.2,c:0.7},
+ {id:'tofu', cat:'prot', n:"Tofu ferme", k:125,p:13,f:7,c:2},
+ {id:'surimi', cat:'prot', n:"Surimi", k:95,p:8,f:0.5,c:14, hint:"~17 g le bâtonnet"},
  {id:'fb3', cat:'prot', n:"Fromage blanc 3%", k:72,p:7.5,f:3,c:4},
  {id:'fb0', cat:'prot', n:"Fromage blanc 0%", k:48,p:8,f:0.2,c:4},
+ {id:'skyr', cat:'prot', n:"Skyr nature", k:57,p:10,f:0.2,c:3.5},
+ {id:'yaourt', cat:'prot', n:"Yaourt nature", k:60,p:4,f:3,c:5, hint:"pot ≈ 125 g"},
+ {id:'yaourtgrec', cat:'prot', n:"Yaourt à la grecque", k:120,p:5,f:9,c:4},
  {id:'whey', cat:'prot', n:"Whey vanille", k:400,p:83,f:5,c:6, hint:"1 scoop = 15 g"},
- {id:'oeuf', cat:'prot', n:"Œuf entier", k:145,p:12.5,f:10,c:0.7, hint:"~55 g pièce"},
- {id:'hache5', cat:'prot', n:"Bœuf haché 5% (cru)", k:125,p:21,f:5,c:0},
+ /* Fromages */
  {id:'comte', cat:'from', n:"Comté 12-18 mois", k:415,p:27,f:34,c:0},
  {id:'cantal', cat:'from', n:"Cantal entre-deux", k:375,p:23,f:31,c:0},
  {id:'brie', cat:'from', n:"Brie", k:335,p:20,f:28,c:0.5},
  {id:'stnect', cat:'from', n:"Saint-nectaire", k:330,p:21,f:27,c:0.5},
  {id:'meule', cat:'from', n:"Meule fruitée (Lidl)", k:395,p:26,f:32,c:0.5},
+ {id:'emmental', cat:'from', n:"Emmental râpé", k:380,p:28,f:29,c:0.5},
+ {id:'mozza', cat:'from', n:"Mozzarella", k:250,p:18,f:19,c:2},
+ {id:'feta', cat:'from', n:"Feta", k:270,p:14,f:23,c:1.5},
+ {id:'parmesan', cat:'from', n:"Parmesan", k:400,p:36,f:28,c:0.5},
+ {id:'chevre', cat:'from', n:"Chèvre (bûche)", k:290,p:19,f:23,c:1},
+ /* Fruits */
  {id:'pomme', cat:'fruit', n:"Pomme", k:52,p:0.3,f:0.2,c:12, hint:"~180 g pièce"},
  {id:'banane', cat:'fruit', n:"Banane", k:90,p:1.1,f:0.3,c:20, hint:"~120 g épluchée"},
  {id:'peche', cat:'fruit', n:"Pêche / nectarine", k:45,p:0.9,f:0.2,c:9.5, hint:"~150 g pièce"},
  {id:'kiwi', cat:'fruit', n:"Kiwi", k:58,p:1.1,f:0.5,c:12, hint:"~75 g pièce"},
  {id:'prune', cat:'fruit', n:"Prune", k:48,p:0.7,f:0.2,c:10.5, hint:"~55 g pièce"},
  {id:'framb', cat:'fruit', n:"Framboises (surgelées)", k:42,p:1.2,f:0.6,c:4.5},
+ {id:'orange', cat:'fruit', n:"Orange", k:47,p:0.9,f:0.1,c:9, hint:"~130 g pièce"},
+ {id:'clem', cat:'fruit', n:"Clémentine", k:47,p:0.8,f:0.2,c:9, hint:"~50 g pièce"},
+ {id:'fraises', cat:'fruit', n:"Fraises", k:33,p:0.7,f:0.3,c:6},
+ {id:'raisin', cat:'fruit', n:"Raisin", k:70,p:0.6,f:0.2,c:16},
+ {id:'melon', cat:'fruit', n:"Melon", k:34,p:0.8,f:0.2,c:7},
+ {id:'pasteque', cat:'fruit', n:"Pastèque", k:30,p:0.6,f:0.2,c:7},
+ {id:'poire', cat:'fruit', n:"Poire", k:55,p:0.4,f:0.1,c:12, hint:"~150 g pièce"},
+ {id:'abricot', cat:'fruit', n:"Abricot", k:45,p:0.9,f:0.2,c:9, hint:"~45 g pièce"},
+ {id:'compote', cat:'fruit', n:"Compote sans sucre ajouté", k:70,p:0.3,f:0.2,c:15, hint:"gourde ≈ 90 g"},
+ {id:'jusor', cat:'fruit', n:"Jus d'orange", k:45,p:0.7,f:0.1,c:10, hint:"verre ≈ 200 ml"},
  {id:'miel', cat:'fruit', n:"Miel", k:325,p:0.3,f:0,c:80, hint:"~10 g le filet, 20 g la cuillère"},
+ /* Placard */
  {id:'cajou', cat:'plac', n:"Noix de cajou", k:575,p:18,f:44,c:27, hint:"une poignée ≈ 30 g"},
  {id:'amande', cat:'plac', n:"Amandes", k:610,p:21,f:50,c:7, hint:"une poignée ≈ 30 g"},
  {id:'noix', cat:'plac', n:"Noix", k:655,p:15,f:63,c:7},
  {id:'chocn', cat:'plac', n:"Chocolat noir 70%", k:565,p:9.5,f:41,c:34, hint:"~10 g le carré"},
+ {id:'chocolait', cat:'plac', n:"Chocolat au lait", k:535,p:7,f:30,c:57, hint:"~10 g le carré"},
  {id:'chips', cat:'plac', n:"Chips (Bret's / Doritos)", k:520,p:6,f:30,c:55},
+ {id:'biscuits', cat:'plac', n:"Biscuits secs (petit-beurre)", k:435,p:7,f:13,c:71, hint:"~8 g pièce"},
  {id:'cornichon', cat:'plac', n:"Cornichons", k:15,p:0.7,f:0.2,c:1.7},
  {id:'huile', cat:'plac', n:"Huile d'olive", k:900,p:0,f:100,c:0, hint:"1 c. à soupe = 10 g"},
+ {id:'beurre', cat:'plac', n:"Beurre", k:745,p:0.7,f:82,c:0.6, hint:"noisette ≈ 10 g"},
+ {id:'creme', cat:'plac', n:"Crème fraîche 30%", k:290,p:2.3,f:30,c:3},
  {id:'vinaigrette', cat:'plac', n:"Vinaigrette maison", k:600,p:0.3,f:65,c:1.5, hint:"1 c. à soupe = 12 g"},
+ {id:'mayo', cat:'plac', n:"Mayonnaise", k:700,p:1,f:75,c:2, hint:"1 c. à soupe = 15 g"},
+ {id:'ketchup', cat:'plac', n:"Ketchup", k:100,p:1.2,f:0.1,c:23},
  {id:'moutarde', cat:'plac', n:"Moutarde", k:150,p:7,f:11,c:5},
+ {id:'saucesoja', cat:'plac', n:"Sauce soja", k:55,p:5,f:0,c:7},
+ {id:'saucetomate', cat:'plac', n:"Sauce tomate (basilic / arrabiata)", k:60,p:1.5,f:2.5,c:7},
+ {id:'sucre', cat:'plac', n:"Sucre", k:400,p:0,f:0,c:100, hint:"1 cuillère ≈ 5 g"},
+ {id:'confiture', cat:'plac', n:"Confiture", k:250,p:0.4,f:0.1,c:60},
+ {id:'pateatart', cat:'plac', n:"Pâte à tartiner", k:540,p:6,f:31,c:57, hint:"1 c. à soupe ≈ 20 g"},
+ {id:'pb', cat:'plac', n:"Beurre de cacahuète", k:620,p:26,f:50,c:12, hint:"1 c. à soupe = 15 g"},
  {id:'avoine', cat:'plac', n:"Flocons d'avoine", k:370,p:13,f:7,c:58},
- {id:'pb', cat:'plac', n:"Beurre de cacahuète", k:620,p:26,f:50,c:12, hint:"1 c. à soupe = 15 g"}
+ {id:'patessec', cat:'plac', n:"Pâtes sèches", k:360,p:12,f:1.8,c:71, hint:"100 g sec ≈ 240 g cuit"},
+ {id:'rizsec', cat:'plac', n:"Riz basmati sec", k:350,p:8,f:0.6,c:77, hint:"100 g sec ≈ 250 g cuit"},
+ {id:'lait', cat:'plac', n:"Lait demi-écrémé", k:46,p:3.2,f:1.5,c:4.8},
+ {id:'vinrouge', cat:'plac', n:"Vin rouge", k:85,p:0,f:0,c:2.6, hint:"verre ≈ 120 ml"},
+ {id:'biere', cat:'plac', n:"Bière blonde", k:43,p:0.5,f:0,c:3.5, hint:"demi ≈ 250 ml"}
 ];
 const TARGETS_DEFAULT = {k:2050,p:143,f:50,c:257};
 const PROFILE_DEFAULT = {name:'Milann', sx:'h', age:28, cm:176, kg:72, act:1.55, goal:-500};
@@ -294,6 +385,11 @@ const store = {
     try{ if(window.storage){ await window.storage.set(k,s); return; } }catch(e){}
     try{ localStorage.setItem(k,s); return; }catch(e){}
     mem[k]=v;
+  },
+  async list(prefix){
+    try{ if(window.storage){ const r = await window.storage.list(prefix); if(r && r.keys) return r.keys; } }catch(e){}
+    try{ return Object.keys(localStorage).filter(k=>k.startsWith(prefix)); }catch(e){}
+    return Object.keys(mem).filter(k=>k.startsWith(prefix));
   }
 };
 function iso(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0')+"-"+String(d.getDate()).padStart(2,'0'); }
@@ -303,16 +399,31 @@ function todayISO(){ return iso(new Date()); }
 let foods=null, targets=null, profile=null, recents=[];
 let viewDate = todayISO();
 let day = [];
-let tick = {b:0,l:0,d:0,w:0};
+let tick = {b:0,l:0,d:0,w:0,wk:0};
+let showBurn = false;
 let pickCat='all', pickSearch='', pickSort=null;
 
+async function migrateFoods(){
+  const v = await store.get('lt_foodsv');
+  if(v>=3) return;
+  const byId = {};
+  foods.forEach(f=>byId[f.id]=f);
+  FOODS_DEFAULT.forEach(df=>{
+    if(!byId[df.id]) foods.push(JSON.parse(JSON.stringify(df)));
+    else if(byId[df.id].cat !== df.cat) byId[df.id].cat = df.cat;
+  });
+  await saveFoods();
+  await store.set('lt_foodsv', 3);
+}
 async function loadDayData(){
   day = (await store.get('lt_day_'+viewDate)) || [];
-  tick = (await store.get('lt_tick_'+viewDate)) || {b:0,l:0,d:0,w:0};
+  tick = Object.assign({b:0,l:0,d:0,w:0,wk:0}, (await store.get('lt_tick_'+viewDate))||{});
+  showBurn = false;
 }
 async function loadAll(){
   foods = await store.get('lt_foods');
-  if(!foods){ foods = JSON.parse(JSON.stringify(FOODS_DEFAULT)); await store.set('lt_foods', foods); }
+  if(!foods){ foods = JSON.parse(JSON.stringify(FOODS_DEFAULT)); await store.set('lt_foods', foods); await store.set('lt_foodsv', 3); }
+  else await migrateFoods();
   targets = (await store.get('lt_targets')) || {...TARGETS_DEFAULT};
   profile = Object.assign({}, PROFILE_DEFAULT, (await store.get('lt_profile'))||{});
   recents = (await store.get('lt_recent')) || [];
@@ -332,18 +443,23 @@ function totals(){
   day.forEach(e=>{ const r=e.g/100; t.k+=e.u.k*r; t.p+=e.u.p*r; t.f+=e.u.f*r; t.c+=e.u.c*r; });
   return t;
 }
+function effTargets(){
+  const burn = tick.wk||0;
+  return {k:targets.k+burn, p:targets.p, f:targets.f, c:targets.c+Math.round(burn/4), burn:burn};
+}
 function pct(v,t){ return Math.min(100, Math.round(v/t*100)); }
 
 /* ================= JAUGES ================= */
 function renderGauges(){
   const t = totals();
-  const kOver = t.k > targets.k*1.03;
-  const left = Math.round(targets.k - t.k);
+  const T = effTargets();
+  const kOver = t.k > T.k*1.03;
+  const left = Math.round(T.k - t.k);
   document.getElementById('gauges').innerHTML =
-   '<div class="kcalrow"><span class="big"'+(kOver?' style="color:var(--red)"':'')+'>'+Math.round(t.k)+'</span><span class="of">/ '+targets.k+'</span><span class="u">kcal</span></div>'+
-   '<div class="kbar"><i style="width:'+pct(t.k,targets.k)+'%'+(kOver?';background:var(--red)':'')+'"></i></div>'+
-   '<div class="kleft">'+(left>=0? "reste "+left+" kcal" : "dépassement +"+(-left)+" kcal")+'</div>'+
-   '<div class="macros">'+mc('P','Protéines',t.p,targets.p)+mc('F','Lipides',t.f,targets.f)+mc('C','Glucides',t.c,targets.c)+'</div>';
+   '<div class="kcalrow"><span class="big"'+(kOver?' style="color:var(--red)"':'')+'>'+Math.round(t.k)+'</span><span class="of">/ '+T.k+'</span><span class="u">kcal</span></div>'+
+   '<div class="kbar"><i style="width:'+pct(t.k,T.k)+'%'+(kOver?';background:var(--red)':'')+'"></i></div>'+
+   '<div class="kleft">'+(left>=0? "reste "+left+" kcal" : "dépassement +"+(-left)+" kcal")+(T.burn? ' · budget +'+T.burn+' (workout, reversé en glucides)':'')+'</div>'+
+   '<div class="macros">'+mc('P','Protéines',t.p,T.p)+mc('F','Lipides',t.f,T.f)+mc('C','Glucides',t.c,T.c)+'</div>';
   renderNext(t);
 }
 function mc(cls,label,v,t){
@@ -353,19 +469,44 @@ function mc(cls,label,v,t){
    '<div class="mbar"><i style="width:'+pct(v,t)+'%"></i></div></div>';
 }
 
-/* ================= TICKERS ================= */
+/* ================= TICKERS + WORKOUT KCAL ================= */
 const TICKDEF = [['b','🥐','Petit-déj'],['l','🍽️','Déjeuner'],['d','🌙','Dîner'],['w','🏋️','Workout']];
 function renderTicks(){
   const el = document.getElementById('ticks');
-  el.innerHTML = TICKDEF.map(td=>
-   '<button class="tick'+(td[0]==='w'?' wo':'')+(tick[td[0]]?' on':'')+'" data-t="'+td[0]+'">'+
-   '<div class="ti">'+td[1]+'</div><div class="tl">'+td[2]+'</div></button>').join('');
+  el.innerHTML = TICKDEF.map(td=>{
+    let label = td[2];
+    if(td[0]==='w' && tick.w && tick.wk) label = '+'+tick.wk+' kcal';
+    return '<button class="tick'+(td[0]==='w'?' wo':'')+(tick[td[0]]?' on':'')+'" data-t="'+td[0]+'">'+
+     '<div class="ti">'+td[1]+'</div><div class="tl">'+label+'</div></button>';
+  }).join('');
   el.querySelectorAll('.tick').forEach(b=> b.onclick = async ()=>{
     const k = b.dataset.t;
-    tick[k] = tick[k]? 0 : 1;
+    if(k==='w'){
+      if(tick.w){ tick.w=0; tick.wk=0; showBurn=false; }
+      else { tick.w=1; showBurn=true; }
+    }else{
+      tick[k] = tick[k]? 0 : 1;
+    }
     await saveTick();
-    renderTicks(); renderGauges();
+    renderTicks(); renderBurn(); renderGauges();
   });
+  renderBurn();
+}
+function renderBurn(){
+  const el = document.getElementById('burnbox');
+  if(!showBurn){ el.innerHTML=''; return; }
+  el.innerHTML = '<div class="burn"><span class="bl">Kcal brûlées</span>'+
+   '<input type="number" inputmode="numeric" id="burnin" value="'+(tick.wk||'')+'" placeholder="optionnel">'+
+   '<button class="bok" id="burnok">OK</button><button class="bno" id="burnno">Sans compter</button></div>';
+  document.getElementById('burnok').onclick = async ()=>{
+    tick.wk = Math.max(0, parseInt(document.getElementById('burnin').value)||0);
+    showBurn=false; await saveTick();
+    renderTicks(); renderGauges();
+  };
+  document.getElementById('burnno').onclick = async ()=>{
+    tick.wk = 0; showBurn=false; await saveTick();
+    renderTicks(); renderGauges();
+  };
 }
 
 /* ================= SUGGESTION « PROCHAIN REPAS » ================= */
@@ -403,7 +544,8 @@ function dishFor(slot, S){
 function renderNext(t){
   const box = document.getElementById('suggbox');
   if(viewDate !== todayISO()){ box.innerHTML=''; return; }
-  const R = {k:targets.k-t.k, p:targets.p-t.p, f:targets.f-t.f, c:targets.c-t.c};
+  const T = effTargets();
+  const R = {k:T.k-t.k, p:T.p-t.p, f:T.f-t.f, c:T.c-t.c};
   const now = new Date(); const h = now.getHours() + now.getMinutes()/60;
   const q = [];
   if(!tick.b && h<11) q.push('b');
@@ -467,7 +609,7 @@ async function shiftDay(n){
   renderAll();
 }
 function renderAll(){
-  document.getElementById('eyebrow').textContent = (profile.name||'Profil')+" · Recomp · "+(profile.goal<0? "déficit "+(-profile.goal) : profile.goal>0? "surplus +"+profile.goal : "maintien");
+  document.getElementById('eyebrow').textContent = (profile.name||'Profil')+" · "+(profile.goal<0? "déficit "+(-profile.goal) : profile.goal>0? "surplus +"+profile.goal : "maintien");
   renderDateNav(); renderGauges(); renderTicks(); renderJournal();
 }
 
@@ -481,6 +623,7 @@ function openPicker(){
   pick.classList.add('open'); pick.scrollTop=0;
 }
 function renderPicker(){
+  stopScan();
   let s = '<div class="ovhead"><button class="back" id="pkclose">✕</button><h2>Ajouter un aliment</h2></div>';
   s += '<input class="search" id="pksearch" type="search" placeholder="Rechercher…" value="'+pickSearch.replace(/"/g,'&quot;')+'">';
   s += '<div class="cats"><button class="cat'+(pickCat==='all'?' on':'')+'" data-c="all">Tous</button>'+
@@ -492,6 +635,7 @@ function renderPicker(){
       const arr = on? (pickSort.dir===-1? ' ↓':' ↑') : '';
       return '<button class="sortb'+(on?' on':'')+'" data-s="'+x[0]+'">'+x[1]+arr+'</button>';
     }).join('')+'</div>';
+  s += '<button class="scanbtn" id="pkscan">📷 Scanner un code-barres</button>';
   if(!pickSearch && pickCat==='all' && !pickSort && recents.length){
     const rf = recents.map(id=>foods.find(f=>f.id===id)).filter(Boolean).slice(0,8);
     if(rf.length) s += '<div class="seclab">Récents</div><div class="recents">'+
@@ -507,7 +651,7 @@ function renderPicker(){
   s += '<button class="newfood" id="pknew">+ Créer un aliment</button>';
   pickin.innerHTML = s;
 
-  document.getElementById('pkclose').onclick = ()=> pick.classList.remove('open');
+  document.getElementById('pkclose').onclick = ()=>{ stopScan(); pick.classList.remove('open'); };
   const si = document.getElementById('pksearch');
   si.addEventListener('input', ()=>{ pickSearch = si.value; renderPicker(); const s2=document.getElementById('pksearch'); s2.focus(); s2.setSelectionRange(s2.value.length,s2.value.length); });
   pickin.querySelectorAll('.cat').forEach(b=> b.onclick = ()=>{ pickCat=b.dataset.c; renderPicker(); });
@@ -518,6 +662,7 @@ function renderPicker(){
     else pickSort = null;
     renderPicker();
   });
+  document.getElementById('pkscan').onclick = scanView;
   pickin.querySelectorAll('.frow').forEach(r=> r.addEventListener('click', (ev)=>{
     if(ev.target.closest('.fpen')) return;
     openPortion(r.dataset.id);
@@ -525,6 +670,103 @@ function renderPicker(){
   pickin.querySelectorAll('.rc').forEach(b=> b.onclick = ()=> openPortion(b.dataset.id));
   pickin.querySelectorAll('.fpen').forEach(b=> b.onclick = ()=> openFoodEditor(b.dataset.pen));
   document.getElementById('pknew').onclick = ()=> openFoodEditor(null);
+}
+
+/* ================= SCAN CODE-BARRES ================= */
+let scanStream=null, scanRAF=null, scanH5=null;
+function scst(msg){ const e=document.getElementById('scst'); if(e) e.textContent = msg; }
+function stopScan(){
+  if(scanRAF){ cancelAnimationFrame(scanRAF); scanRAF=null; }
+  if(scanStream){ try{ scanStream.getTracks().forEach(t=>t.stop()); }catch(e){} scanStream=null; }
+  if(scanH5){ try{ scanH5.stop().catch(()=>{}); }catch(e){} scanH5=null; }
+}
+function scanView(){
+  stopScan();
+  let s = '<div class="ovhead"><button class="back" id="scback">‹</button><h2>Scanner</h2></div>';
+  s += '<div class="pcard"><div id="scanbox"><video id="scanvid" playsinline muted></video></div>';
+  s += '<div class="scst" id="scst">Autorise la caméra…</div>';
+  s += '<div class="fields" style="margin-top:14px"><label>Ou tape le code-barres<input class="mono" type="number" inputmode="numeric" id="sc-code" placeholder="ex. 3017620422003"></label></div>';
+  s += '<button class="pbtn add" id="sc-go" style="margin-top:10px;width:100%">Chercher ce code</button></div>';
+  pickin.innerHTML = s; pick.scrollTop=0;
+  document.getElementById('scback').onclick = ()=>{ stopScan(); renderPicker(); };
+  document.getElementById('sc-go').onclick = ()=>{
+    const c = document.getElementById('sc-code').value.trim();
+    if(c){ stopScan(); onCode(c); }
+  };
+  startScan();
+}
+async function startScan(){
+  try{
+    if('BarcodeDetector' in window){
+      const fmts = await BarcodeDetector.getSupportedFormats();
+      if(fmts.includes('ean_13')){ nativeScan(); return; }
+    }
+  }catch(e){}
+  libScan();
+}
+async function nativeScan(){
+  const vid = document.getElementById('scanvid');
+  if(!vid) return;
+  try{
+    scanStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}, audio:false});
+    vid.srcObject = scanStream;
+    await vid.play();
+    scst("Vise le code-barres");
+    const det = new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128']});
+    const loop = async ()=>{
+      if(!document.getElementById('scanvid') || !scanStream) return;
+      try{
+        const codes = await det.detect(vid);
+        if(codes && codes.length){ const c = codes[0].rawValue; stopScan(); onCode(c); return; }
+      }catch(e){}
+      scanRAF = requestAnimationFrame(loop);
+    };
+    loop();
+  }catch(e){ scst("Caméra refusée ou indisponible — utilise la saisie manuelle en bas."); }
+}
+function loadScanLib(){
+  return new Promise((res,rej)=>{
+    if(window.Html5Qrcode) return res();
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js';
+    s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+}
+async function libScan(){
+  scst("Chargement du module caméra…");
+  try{ await loadScanLib(); }catch(e){ scst("Module caméra indisponible (hors ligne ?) — saisie manuelle en bas."); return; }
+  const box = document.getElementById('scanbox'); if(!box) return;
+  box.innerHTML = '<div id="h5box"></div>';
+  try{
+    scanH5 = new Html5Qrcode('h5box');
+    const F = Html5QrcodeSupportedFormats;
+    await scanH5.start(
+      {facingMode:'environment'},
+      {fps:8, qrbox:{width:260,height:140}, formatsToSupport:[F.EAN_13,F.EAN_8,F.UPC_A,F.UPC_E,F.CODE_128]},
+      (txt)=>{ stopScan(); onCode(txt); },
+      ()=>{}
+    );
+    scst("Vise le code-barres");
+  }catch(e){ scst("Caméra refusée — utilise la saisie manuelle en bas."); }
+}
+async function onCode(code){
+  pickin.innerHTML = '<div class="ovhead"><button class="back" id="scback2">‹</button><h2>Scanner</h2></div>'+
+   '<div class="pcard"><div class="scst">Recherche du produit '+code+'…</div></div>';
+  document.getElementById('scback2').onclick = ()=> renderPicker();
+  try{
+    const r = await fetch('https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json?fields=product_name,brands,nutriments,serving_size');
+    const j = await r.json();
+    if(j && j.status===1 && j.product){
+      const p = j.product, n = p.nutriments||{};
+      const kk = n['energy-kcal_100g']!=null ? Math.round(n['energy-kcal_100g']) : (n['energy_100g']!=null ? Math.round(n['energy_100g']/4.184) : '');
+      const r1 = v => v!=null ? Math.round(v*10)/10 : '';
+      const nm = (p.brands? p.brands.split(',')[0].trim()+' — ' : '') + (p.product_name || ('Produit '+code));
+      openFoodEditor(null, {id:'f'+Date.now().toString(36), cat:'plac', n:nm, k:kk, p:r1(n.proteins_100g), f:r1(n.fat_100g), c:r1(n.carbohydrates_100g), hint:(p.serving_size? 'portion étiquette : '+p.serving_size : '')}, true);
+      return;
+    }
+  }catch(e){}
+  openFoodEditor(null, {id:'f'+Date.now().toString(36), cat:'plac', n:'', k:'',p:'',f:'',c:'', hint:'code '+code+' introuvable — recopie l\'étiquette'}, true);
 }
 
 /* ================= PORTION ================= */
@@ -590,10 +832,11 @@ function openPortionForEntry(i){
 }
 
 /* ================= ÉDITEUR D'ALIMENT ================= */
-function openFoodEditor(fid){
-  const f = fid? foods.find(x=>x.id===fid) : {id:'f'+Date.now().toString(36), cat:'prot', n:'', k:'',p:'',f:'',c:'', hint:''};
+function openFoodEditor(fid, prefill, fromScan){
+  const f = fid? foods.find(x=>x.id===fid) : (prefill || {id:'f'+Date.now().toString(36), cat:'prot', n:'', k:'',p:'',f:'',c:'', hint:''});
   const isNew = !fid;
-  let s = '<div class="ovhead"><button class="back" id="feback">‹</button><h2>'+(isNew?'Créer un aliment':'Modifier')+'</h2></div>';
+  const title = fromScan? 'Produit scanné' : (isNew? 'Créer un aliment' : 'Modifier');
+  let s = '<div class="ovhead"><button class="back" id="feback">‹</button><h2>'+title+'</h2></div>';
   s += '<div class="fields">'+
    '<label>Nom<input type="text" id="fe-n" value="'+(f.n||'').replace(/"/g,'&quot;')+'"></label>'+
    '<label>Catégorie<select id="fe-cat">'+CATS.map(c=>'<option value="'+c[0]+'"'+(f.cat===c[0]?' selected':'')+'>'+c[1]+'</option>').join('')+'</select></label>'+
@@ -605,6 +848,7 @@ function openFoodEditor(fid){
    '</div>'+
    '<label>Repère (optionnel)<input type="text" id="fe-h" value="'+(f.hint||'').replace(/"/g,'&quot;')+'" placeholder="ex. 1 boîte ≈ 112 g"></label>'+
   '</div>'+
+  (fromScan? '<div class="note">Valeurs récupérées sur Open Food Facts — vérifie-les d\'un œil avant d\'enregistrer, la base est communautaire.</div>':'')+
   '<div class="savebar">'+(!isNew? '<button class="pbtn del" id="fe-del">Suppr.</button>':'')+
   '<button class="pbtn add" id="fe-ok">Enregistrer</button></div>';
   pickin.innerHTML = s; pick.scrollTop=0;
@@ -651,6 +895,16 @@ function readProfileFields(){
     goal: parseInt(document.getElementById('pf-goal').value)||0
   };
 }
+async function exportAll(){
+  const keys = await store.list('lt_');
+  const out = {};
+  for(const k of keys){ out[k] = await store.get(k); }
+  const blob = new Blob([JSON.stringify(out)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'la-table-backup-'+todayISO()+'.json';
+  document.body.appendChild(a); a.click(); a.remove();
+}
 async function openSettings(){
   const w = (await store.get('lt_w')) || [];
   const last7 = w.slice(-7);
@@ -670,7 +924,7 @@ async function openSettings(){
    '<label>Objectif<select id="pf-goal">'+GOALS.map(g=>'<option value="'+g[0]+'"'+(profile.goal==g[0]?' selected':'')+'>'+g[1]+'</option>').join('')+'</select></label>'+
   '</div>';
   s += '<button class="pbtn add" id="pf-calc" style="margin-top:12px;width:100%">Calculer mes cibles à partir du profil</button>';
-  s += '<div class="note">Formule Mifflin-St Jeor × activité, protéines à ~2 g/kg, lipides à ~0,66 g/kg, glucides = le reste. Le calcul remplit les cases ci-dessous — tu peux les ajuster à la main avant d\'enregistrer.</div>';
+  s += '<div class="note">Formule Mifflin-St Jeor × activité, protéines à ~2 g/kg, lipides à ~0,66 g/kg, glucides = le reste. Le calcul remplit les cases ci-dessous — ajuste à la main avant d\'enregistrer.</div>';
   s += '<div class="h2s">Cibles du jour</div><div class="fields"><div class="grid2">'+
    '<label>Calories (kcal)<input class="mono" type="number" id="t-k" value="'+targets.k+'"></label>'+
    '<label>Protéines (g)<input class="mono" type="number" id="t-p" value="'+targets.p+'"></label>'+
@@ -678,12 +932,16 @@ async function openSettings(){
    '<label>Glucides (g)<input class="mono" type="number" id="t-c" value="'+targets.c+'"></label>'+
   '</div></div>';
   s += '<button class="pbtn add" id="t-ok" style="margin-top:12px;width:100%">Enregistrer profil & cibles</button>';
-  s += '<div class="note">Lipides : la cible est une moyenne — 45 g les jours saumon-riz, 65 g les jours curry/BBQ, ça s\'équilibre sur la semaine. La vraie boussole reste la <b>pesée du matin</b> : la moyenne 7 j doit bouger de ~0,3 kg/sem dans le sens de ton objectif. Plus vite → +glucides. Plus lentement → −glucides.</div>';
+  s += '<div class="note">Lipides : la cible est une moyenne — plus bas les jours poisson-riz, plus haut les jours curry/BBQ, ça s\'équilibre sur la semaine. La vraie boussole reste la <b>pesée du matin</b> : la moyenne 7 j doit bouger de ~0,3 kg/sem dans le sens de ton objectif.</div>';
   s += '<div class="h2s">Poids du matin</div>';
   s += '<div class="fields"><label>Aujourd\'hui (kg)<input class="mono" type="number" inputmode="decimal" step="0.1" id="w-in" placeholder="'+profile.kg+'"></label></div>';
   s += '<button class="pbtn add" id="w-ok" style="margin-top:10px;width:100%">Enregistrer le poids</button>';
   if(avg) s += '<div class="avg">Moyenne 7 derniers relevés : <b>'+avg+' kg</b></div>';
   if(last7.length) s += '<div style="margin-top:8px">'+last7.slice().reverse().map(x=>'<div class="wrow"><span>'+x.d+'</span><span>'+x.kg.toFixed(1)+' kg</span></div>').join('')+'</div>';
+  s += '<div class="h2s">Sauvegarde</div>';
+  s += '<div class="note">Exporte un fichier de secours (journal, profil, aliments créés). À refaire de temps en temps — l\'import restaure tout, même après un nettoyage du navigateur.</div>';
+  s += '<div class="savebar"><button class="pbtn add" id="bk-exp">Exporter</button><button class="pbtn sec" id="bk-imp">Importer</button></div>';
+  s += '<input type="file" id="bk-file" accept="application/json" style="display:none">';
   s += '<button class="newfood" id="t-reset" style="margin-top:22px">Restaurer la base d\'aliments par défaut</button>';
   setin.innerHTML = s;
   setov.classList.add('open'); setov.scrollTop=0;
@@ -722,10 +980,28 @@ async function openSettings(){
     await store.set('lt_profile', profile);
     openSettings();
   };
+  document.getElementById('bk-exp').onclick = exportAll;
+  document.getElementById('bk-imp').onclick = ()=> document.getElementById('bk-file').click();
+  document.getElementById('bk-file').addEventListener('change', async (ev)=>{
+    const file = ev.target.files[0]; if(!file) return;
+    try{
+      const txt = await file.text();
+      const obj = JSON.parse(txt);
+      const keys = Object.keys(obj).filter(k=>k.startsWith('lt_'));
+      if(!keys.length){ alert("Ce fichier ne ressemble pas à un backup La Table."); return; }
+      if(!confirm("Restaurer ce backup ? Les données actuelles seront remplacées par celles du fichier.")) return;
+      for(const k of keys){ await store.set(k, obj[k]); }
+      await loadAll();
+      setov.classList.remove('open');
+      renderAll();
+      alert("Backup restauré ✓");
+    }catch(e){ alert("Fichier illisible."); }
+  });
   document.getElementById('t-reset').onclick = async ()=>{
     if(confirm("Restaurer la base d'aliments par défaut ? Tes aliments créés et tes modifications seront perdus (le journal, lui, est conservé).")){
       foods = JSON.parse(JSON.stringify(FOODS_DEFAULT));
-      await saveFoods(); setov.classList.remove('open');
+      await saveFoods(); await store.set('lt_foodsv', 3);
+      setov.classList.remove('open');
     }
   };
 }
