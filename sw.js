@@ -1,4 +1,4 @@
-const C = 'lafonte-table-v1';
+const C = 'lafonte-table-v2';
 const CORE = ['./table.html', './table-icon-192.png', './table-icon-512.png', './table.webmanifest'];
 
 self.addEventListener('install', e => {
@@ -13,9 +13,11 @@ self.addEventListener('activate', e => {
   );
 });
 
-/* Réseau d'abord (les mises à jour arrivent toujours), cache en secours (hors ligne). */
+/* Réseau d'abord, cache en secours — et on ne touche JAMAIS aux requêtes
+   vers d'autres domaines (Open Food Facts, CDN, polices) : elles passent en direct. */
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  if (!e.request.url.startsWith(self.location.origin)) return;
   e.respondWith(
     fetch(e.request)
       .then(r => {
