@@ -80,6 +80,7 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
   margin:0; text-transform:uppercase; display:flex; align-items:baseline; gap:8px; padding-right:38px;
 }
 .card h3 .num{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--blu); font-weight:600}
+.lk{font-size:13px; opacity:.55}
 .exmeta{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--mut); margin:5px 0 0; letter-spacing:.03em}
 .cue{font-size:13.5px; color:var(--mut); margin:8px 0 0; line-height:1.45}
 .last{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--dim); margin-top:9px; letter-spacing:.02em}
@@ -143,6 +144,12 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
 .ebtn.primary{background:var(--blu); border-color:var(--blu); color:#fff}
 .ebtn.danger{color:var(--red); border-color:rgba(217,106,90,.4)}
 .ebtn.ghost{color:var(--dim)}
+.linksec{margin-top:2px; border-top:1px dashed var(--line2); padding-top:10px; display:flex; flex-direction:column; gap:8px}
+.lkstatus{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--dim); letter-spacing:.03em; line-height:1.5}
+.lkstatus b{color:var(--mut)}
+.lkrow{display:block; width:100%; text-align:left; border:1px solid var(--line); background:var(--card2); color:var(--ink);
+  border-radius:9px; padding:10px 12px; font-size:14px; cursor:pointer}
+.lkrow small{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.05em; margin-right:8px}
 .addex{
   width:100%; border:1px dashed var(--line2); background:transparent; color:var(--mut);
   border-radius:var(--r); padding:14px; font-size:15px; font-weight:600; cursor:pointer; margin-bottom:12px;
@@ -190,7 +197,7 @@ header.top{position:sticky; top:0; z-index:50; background:linear-gradient(var(--
   background:var(--card); border:1px solid var(--line2); color:var(--ink);
   width:46px; height:46px; border-radius:50%; font-size:19px; cursor:pointer; display:none;
 }
-#overlay.open ~ .closefix, .closefix.show{display:block}
+.closefix.show{display:block}
 #overlay h2.doc{font-family:'Barlow Condensed',sans-serif; font-size:40px; text-transform:uppercase; margin:8px 0 2px; line-height:1; padding-right:52px}
 #overlay .docsub{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.1em; margin-bottom:20px}
 #overlay h3.sec{font-family:'Barlow Condensed',sans-serif; font-size:24px; text-transform:uppercase; margin:26px 0 8px; padding-top:14px; border-top:1px solid var(--line); color:var(--blu)}
@@ -228,7 +235,7 @@ footer{margin-top:26px; text-align:center; font-family:'IBM Plex Mono',monospace
 <div class="wrap">
   <div id="banner"></div>
   <main id="app"></main>
-  <footer>Sauvegarde automatique · v2 · Juillet 2026</footer>
+  <footer>Sauvegarde automatique · v3 · Juillet 2026</footer>
 </div>
 
 <button id="timer" class="hidden" aria-live="polite">
@@ -387,7 +394,7 @@ async function saveSet(sess, ex, idx, kg, reps){
   e.s[idx] = [kg, reps];
   while(h.length>12) h.shift();
   await store.set('lf_'+ex.id, h);
-  await store.set('lf_pos', {u:sess.uid, d:d});
+  await store.set('lf_pos', sess.uid);
 }
 
 /* ================= PROGRAMME (persistant + éditable) ================= */
@@ -398,6 +405,16 @@ async function loadProg(){
   if(!p) await saveProg();
 }
 async function saveProg(){ await store.set('lf_prog2', prog); }
+
+/* Exercices partageant le même historique (même id) */
+function linkedTo(ex){
+  const out = [];
+  prog.sessions.forEach(S=>{
+    if(S.ex) S.ex.forEach(e=>{ if(e!==ex && e.id===ex.id) out.push({S:S, e:e}); });
+  });
+  return out;
+}
+function sessLabel(S){ return S.t+(S.tag? ' '+S.tag : ''); }
 
 /* ================= CHARGEUR DE DISQUES ================= */
 function sideCompo(kg, solo){
@@ -454,7 +471,8 @@ tEl.addEventListener('click', ()=>{ clearInterval(tInt); tEl.classList.add('hidd
 const app = document.getElementById('app');
 const chips = document.getElementById('chips');
 let selIdx = 0;
-let editIdx = null; // exercice en cours d'édition
+let editIdx = null;
+let linkMode = false, dupMode = false;
 
 function fmtRest(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,'0'); }
 
@@ -464,7 +482,7 @@ function buildChips(){
     const c = document.createElement('div');
     c.className = 'chip'+(i===selIdx?' sel':'');
     c.innerHTML = '<div class="d">'+S.t+'</div><div class="t">'+(S.tag||'·')+'</div>';
-    c.onclick = ()=>{ selIdx=i; editIdx=null; buildChips(); render(); window.scrollTo({top:0}); };
+    c.onclick = ()=>{ selIdx=i; editIdx=null; linkMode=false; dupMode=false; buildChips(); render(); window.scrollTo({top:0}); };
     chips.appendChild(c);
   });
 }
@@ -494,7 +512,7 @@ const MODES = [['pair','2 haltères'],['solo','1 haltère'],['bw','Poids du corp
 
 function editPanelHTML(ex){
   const segs = MODES.map(m=>'<button class="seg'+(ex.m===m[0]?' on':'')+'" data-m="'+m[0]+'">'+m[1]+'</button>').join('');
-  return '<div class="editp">'+
+  let s = '<div class="editp">'+
    '<label>Nom de l\'exercice<input type="text" class="e-n" value="'+ex.n.replace(/"/g,'&quot;')+'"></label>'+
    '<label>Consigne<textarea class="e-c" rows="2">'+(ex.cue||'')+'</textarea></label>'+
    '<div class="segs">'+segs+'</div>'+
@@ -509,7 +527,37 @@ function editPanelHTML(ex){
      '<button class="ebtn ghost" data-a="clear">Effacer l\'historique</button>'+
      '<button class="ebtn danger" data-a="del">Supprimer</button>'+
      '<button class="ebtn primary" data-a="ok" style="margin-left:auto">OK</button>'+
-   '</div></div>';
+   '</div>';
+
+  /* --- Section historique & liaisons --- */
+  const links = linkedTo(ex);
+  s += '<div class="linksec">';
+  s += '<div class="lkstatus">'+(links.length
+    ? '🔗 Historique partagé avec : <b>'+links.map(o=>o.e.n+' ('+sessLabel(o.S)+')').join(', ')+'</b>'
+    : 'Historique indépendant — aucun lien actif.')+'</div>';
+  s += '<div class="editactions">';
+  if(links.length) s += '<button class="ebtn danger" data-a="unlink">Délier</button>';
+  s += '<button class="ebtn" data-a="linkto">'+(linkMode?'Annuler':'Lier à…')+'</button>';
+  s += '<button class="ebtn" data-a="dup">'+(dupMode?'Annuler':'Dupliquer vers…')+'</button>';
+  s += '</div>';
+  if(linkMode){
+    s += '<div class="lkstatus">Choisis l\'exercice de référence : <b>son historique devient l\'historique commun</b> (celui de « '+ex.n+' » sera écrasé).</div>';
+    prog.sessions.forEach((S2,si)=>{
+      if(S2.ex) S2.ex.forEach((e2,ei)=>{
+        if(e2!==ex && e2.id!==ex.id){
+          s += '<button class="lkrow" data-link="'+si+':'+ei+'"><small>'+sessLabel(S2)+'</small>'+e2.n+'</button>';
+        }
+      });
+    });
+  }
+  if(dupMode){
+    s += '<div class="lkstatus">Copie liée (nom, consigne, réglages + historique partagé) vers :</div>';
+    prog.sessions.forEach((S2,si)=>{
+      if(!S2.rest) s += '<button class="lkrow" data-dup="'+si+'">'+sessLabel(S2)+'</button>';
+    });
+  }
+  s += '</div></div>';
+  return s;
 }
 
 async function render(){
@@ -536,6 +584,7 @@ async function render(){
     const h = await loadHist(ex.id);
     const {html:lastHtml, prev} = lastLine(ex, h);
     const todayEntry = h.find(e=>e.d===today());
+    const isLinked = linkedTo(ex).length>0;
 
     const repTxt = ex.m==='time' ? ex.r[0]+'–'+ex.r[1]+' s' : ex.r[0]+'–'+ex.r[1]+' reps';
     const uniTxt = ex.uni? ' / '+ex.uni : '';
@@ -544,11 +593,10 @@ async function render(){
     const card = document.createElement('div');
     card.className='card';
     let inner = '<button class="pencil" aria-label="Modifier">✎</button>'+
-                '<h3><span class="num">'+String(x+1).padStart(2,'0')+'</span> '+ex.n+'</h3>'+
+                '<h3><span class="num">'+String(x+1).padStart(2,'0')+'</span> '+ex.n+(isLinked?' <span class="lk" title="Historique partagé">🔗</span>':'')+'</h3>'+
                 '<div class="exmeta">'+meta+'</div>'+
                 (ex.cue? '<p class="cue">'+ex.cue+'</p>' : '')+ lastHtml + progBadge(ex, prev);
 
-    const showKg = (ex.m==='pair' || ex.m==='solo' || ex.m==='bw');
     inner += '<div class="sets">';
     for(let i=0;i<ex.s;i++){
       const t = todayEntry?.s?.[i];
@@ -607,6 +655,7 @@ async function render(){
 
     card.querySelector('.pencil').addEventListener('click', ()=>{
       editIdx = (editIdx===x)? null : x;
+      linkMode = false; dupMode = false;
       render();
     });
 
@@ -631,9 +680,37 @@ async function render(){
         if(a==='r-') ex.rest = Math.max(30, ex.rest-15);
         if(a==='up' && x>0){ readBack(); S.ex.splice(x-1,0,S.ex.splice(x,1)[0]); editIdx=x-1; }
         if(a==='down' && x<S.ex.length-1){ readBack(); S.ex.splice(x+1,0,S.ex.splice(x,1)[0]); editIdx=x+1; }
-        if(a==='clear'){ if(confirm("Effacer l'historique de « "+ex.n+" » ?")){ HIST[ex.id]=[]; await store.set('lf_'+ex.id, []); } }
-        if(a==='del'){ if(confirm("Supprimer « "+ex.n+" » de la séance ?")){ S.ex.splice(x,1); editIdx=null; } }
-        if(a==='ok'){ readBack(); editIdx=null; }
+        if(a==='clear'){ if(confirm("Effacer l'historique de « "+ex.n+" » ?"+(linkedTo(ex).length? "\nAttention : historique partagé — il sera effacé aussi pour "+linkedTo(ex).map(o=>o.e.n+' ('+sessLabel(o.S)+')').join(', ')+"." : ""))){ HIST[ex.id]=[]; await store.set('lf_'+ex.id, []); } }
+        if(a==='del'){ if(confirm("Supprimer « "+ex.n+" » de la séance ?"+(linkedTo(ex).length? "\n(Son jumeau lié garde tout l'historique.)":""))){ S.ex.splice(x,1); editIdx=null; linkMode=false; dupMode=false; } }
+        if(a==='unlink'){
+          const names = linkedTo(ex).map(o=>o.e.n+' ('+sessLabel(o.S)+')').join(', ');
+          if(confirm("Délier « "+ex.n+" » ?\nIl repart avec un historique vierge. "+names+" conserve tout l'historique existant.")){
+            readBack();
+            ex.id = 'x'+Date.now().toString(36);
+            linkMode=false; dupMode=false;
+          }
+        }
+        if(a==='linkto'){ readBack(); linkMode = !linkMode; dupMode = false; }
+        if(a==='dup'){ readBack(); dupMode = !dupMode; linkMode = false; }
+        if(a==='ok'){ readBack(); editIdx=null; linkMode=false; dupMode=false; }
+        await saveProg(); render();
+      }));
+      ep.querySelectorAll('[data-link]').forEach(b=> b.addEventListener('click', async ()=>{
+        const parts = b.dataset.link.split(':');
+        const target = prog.sessions[+parts[0]].ex[+parts[1]];
+        if(confirm("Lier « "+ex.n+" » à « "+target.n+" » ?\nL'historique de « "+target.n+" » devient l'historique commun aux deux. L'historique actuel de « "+ex.n+" » est écrasé.")){
+          readBack();
+          ex.id = target.id;
+          linkMode = false;
+          await saveProg(); render();
+        }
+      }));
+      ep.querySelectorAll('[data-dup]').forEach(b=> b.addEventListener('click', async ()=>{
+        const si = +b.dataset.dup;
+        readBack();
+        const copy = JSON.parse(JSON.stringify(ex));
+        prog.sessions[si].ex.push(copy);
+        dupMode = false;
         await saveProg(); render();
       }));
     }
@@ -644,6 +721,7 @@ async function render(){
   add.onclick = async ()=>{
     S.ex.push({id:'x'+Date.now().toString(36), n:'Nouvel exercice', m:'pair', s:3, r:[8,12], rest:180, cue:''});
     editIdx = S.ex.length-1;
+    linkMode=false; dupMode=false;
     await saveProg(); render();
   };
   app.appendChild(add);
@@ -660,30 +738,31 @@ async function banner(){
 
 /* ================= PROGRAMME COMPLET (overlay) ================= */
 function docHTML(){
-  let s = '<h2 class="doc">Le programme</h2><div class="docsub">Push Pull Legs ×2 · chaque muscle 2×/cycle · v2</div>';
+  let s = '<h2 class="doc">Le programme</h2><div class="docsub">Push Pull Legs ×2 · chaque muscle 2×/cycle · v3</div>';
   s += '<h3 class="sec">La logique</h3>';
   s += '<p><b>Cycle de 7 étapes, sans calendrier :</b> Push A → Pull A → Legs A → Repos → Push B → Pull B → Legs B, puis on reboucle. Tu avances au rythme de tes journées — l\'app se souvient d\'où tu en es et ouvre la bonne séance.</p>';
-  s += '<p><b>Chaque muscle est travaillé 2× par cycle</b> sous deux angles différents : couché + incliné vs dips + écartés, tractions pronation vs supination, rowing haltère vs rowing aux barres, quadris vs chaîne postérieure. Zéro élastique en exercice (il ne sert plus qu\'à l\'échauffement des coudes et épaules).</p>';
+  s += '<p><b>Chaque muscle est travaillé 2× par cycle</b> sous deux angles différents : couché + incliné vs dips + écartés, tractions pronation vs supination, quadris vs chaîne postérieure. Zéro élastique en exercice (il ne sert plus qu\'à l\'échauffement des coudes et épaules).</p>';
   s += '<h3 class="sec">Les règles</h3><ul>';
   s += '<li><b>Effort :</b> composés à RIR 1–2 (garde 1–2 reps en réserve), isolation jusqu\'à l\'échec si tu veux.</li>';
   s += '<li><b>Progression :</b> haut de fourchette atteint sur toutes les séries → +2 kg (badge ▲). Poids du corps : ajoute du lest (sac à dos + disques) ou durcis la variante.</li>';
   s += '<li><b>Repos :</b> 3:00 par défaut partout. Tu peux baisser l\'isolation à 1:30–2:00 via le crayon ✎ sans rien perdre — ça raccourcit la séance.</li>';
   s += '<li><b>Coudes :</b> le bloc élastique de l\'échauffement reste obligatoire avant push et pull. Douleur vive en série = stop l\'exo du jour.</li>';
   s += '<li><b>Deload :</b> toutes les 6–8 semaines ou après 2 séances de stagnation : un cycle à −40 % de séries.</li>';
-  s += '<li><b>Édition :</b> crayon ✎ sur chaque exo (nom, consigne, séries, reps, repos, ordre, suppression) · « + Ajouter un exercice » en bas de chaque séance. Tes modifs sont sauvegardées.</li></ul>';
+  s += '<li><b>Édition :</b> crayon ✎ sur chaque exo (nom, consigne, séries, reps, repos, ordre, suppression) · « + Ajouter un exercice » en bas de chaque séance. Tes modifs sont sauvegardées.</li>';
+  s += '<li><b>Historique lié 🔗 :</b> deux exos peuvent partager le même historique (ex. élévations latérales A/B) — l\'icône 🔗 le signale sur la carte. Via le crayon : <b>Délier</b> (l\'exo repart à zéro, son jumeau garde tout), <b>Lier à…</b> (il adopte l\'historique de l\'exo cible que tu choisis), <b>Dupliquer vers…</b> (copie liée dans une autre séance).</li></ul>';
   s += '<h3 class="sec">Le détail</h3>';
   prog.sessions.forEach(S=>{
     s += '<div class="dayblock"><h4>'+S.t+' '+(S.tag||'')+'</h4><div class="dm">'+(S.rest? 'Récupération' : S.sub+' · '+S.dur)+'</div>';
     if(S.rest){ s += '<p>Sommeil 7–9 h. Un jour d\'entraînement pour tes hormones.</p></div>'; return; }
     S.ex.forEach((ex,i)=>{
       const repTxt = ex.m==='time' ? ex.r[0]+'–'+ex.r[1]+' s' : ex.r[0]+'–'+ex.r[1]+' reps';
-      s += '<div class="exline"><div class="xn">'+String(i+1).padStart(2,'0')+'</div><div class="xb"><div class="xt">'+ex.n+'</div><div class="xm">'+ex.s+' × '+repTxt+(ex.uni?' / '+ex.uni:'')+' · repos '+fmtRest(ex.rest)+'</div></div></div>';
+      s += '<div class="exline"><div class="xn">'+String(i+1).padStart(2,'0')+'</div><div class="xb"><div class="xt">'+ex.n+(linkedTo(ex).length?' 🔗':'')+'</div><div class="xm">'+ex.s+' × '+repTxt+(ex.uni?' / '+ex.uni:'')+' · repos '+fmtRest(ex.rest)+'</div></div></div>';
     });
     s += '</div>';
   });
   s += '<h3 class="sec">Cable crunch — l\'alternative</h3>';
   s += '<p>Le <b>crunch décliné lesté</b> (Legs B) est mécaniquement le même mouvement : flexion de colonne contre une charge qui grandit — disque de 2, puis 5, puis 5+2 kg contre la poitrine. Si tu veux vraiment la sensation câble : plie l\'élastique <b>en deux</b> autour de la barre de traction (tension quasi doublée) et fais le crunch à genoux dessous. Teste les deux, garde le meilleur.</p>';
-  s += '<footer>La Fonte v2 · construit pour ton matériel exact</footer>';
+  s += '<footer>La Fonte v3 · construit pour ton matériel exact</footer>';
   s += '<button class="closebottom" id="closeDocB">Fermer</button>';
   return s;
 }
@@ -705,11 +784,16 @@ closeFix.onclick = closeOv;
   await loadProg();
   const pos = await store.get('lf_pos');
   if(pos){
-    const u = pos.u || pos;
-    const i = prog.sessions.findIndex(s=>s.uid===u);
+    const i = prog.sessions.findIndex(s=>s.uid===pos);
     if(i>=0){
-      if(pos.d === today()){
-        selIdx = i; /* séance du jour en cours ou terminée : on reste dessus */
+      const t = today();
+      let loggedToday = false;
+      for(const ex of (prog.sessions[i].ex||[])){
+        const h = await loadHist(ex.id);
+        if(h.some(e=>e.d===t && e.s && e.s.some(x=>x))){ loggedToday = true; break; }
+      }
+      if(loggedToday){
+        selIdx = i;
       }else{
         let j = (i+1) % prog.sessions.length;
         while(prog.sessions[j].rest) j = (j+1) % prog.sessions.length;
